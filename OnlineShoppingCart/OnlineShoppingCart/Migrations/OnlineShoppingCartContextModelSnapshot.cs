@@ -171,7 +171,7 @@ namespace OnlineShoppingCart.Migrations
 
                     b.HasIndex("OrdersOrderId");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payment");
                 });
 
             modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.Product", b =>
@@ -202,6 +202,26 @@ namespace OnlineShoppingCart.Migrations
                     b.HasIndex("CategoriesCategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.ProductImage", b =>
+                {
+                    b.Property<int>("ImageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ProductsProductId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("ImageId");
+
+                    b.HasIndex("ProductsProductId");
+
+                    b.ToTable("ProductImage");
                 });
 
             modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.Order", b =>
@@ -241,6 +261,13 @@ namespace OnlineShoppingCart.Migrations
                     b.HasOne("OnlineShoppingCart.DataAccessLayer.Models.Category", "Categories")
                         .WithMany("Products")
                         .HasForeignKey("CategoriesCategoryId");
+                });
+
+            modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.ProductImage", b =>
+                {
+                    b.HasOne("OnlineShoppingCart.DataAccessLayer.Models.Product", "Products")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductsProductId");
                 });
 #pragma warning restore 612, 618
         }

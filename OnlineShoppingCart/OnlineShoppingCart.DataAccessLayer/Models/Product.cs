@@ -10,8 +10,7 @@ namespace OnlineShoppingCart.DataAccessLayer.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long ProductId { get; set; }
         [Required()]
-        public string ProductName { get; set; }
-        [Required()]
+        public string ProductName { get; set; }   
         public float UnitPrice { get; set; }
         public long UnitsInStock { get; set; }
         public string Description { get; set; }
@@ -19,5 +18,7 @@ namespace OnlineShoppingCart.DataAccessLayer.Models
         public Category Categories { get; set; }
 
         public ICollection<OrderItemProduct> OrderItemProducts { get; set; }
+
+        public ICollection<ProductImage> ProductImages { get; set; }
     }
 }

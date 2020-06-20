@@ -5,15 +5,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200616081820_AddProductImage.cs" />
+    <Compile Remove="Migrations\20200616081820_AddProductImage.Designer.cs" />
+    <Compile Remove="Migrations\20200616082302_AddProductImage.cs" />
+    <Compile Remove="Migrations\20200616082302_AddProductImage.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OnlineShoppingCart.BusinessLayer\OnlineShoppingCart.BusinessLayer.csproj" />
     <ProjectReference Include="..\OnlineShoppingCart.DataAccessLayer\OnlineShoppingCart.DataAccessLayer.csproj" />
   </ItemGroup>
 

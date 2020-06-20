@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -9,8 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OnlineShoppingCart.BusinessLayer.IRepositories;
+using OnlineShoppingCart.BusinessLayer.Repositories;
 using OnlineShoppingCart.DataAccessLayer.Contexts;
-using static OnlineShoppingCart.DataAccessLayer.Contexts.OnlineShoppingCartContext;
+using OnlineShoppingCart.DataAccessLayer.Models;
 
 namespace OnlineShoppingCart
 {
@@ -27,9 +25,9 @@ namespace OnlineShoppingCart
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<OnlineShoppingCartContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OnlineShoppingCartContext"), b => b.MigrationsAssembly("OnlineShoppingCart")));
+            services.AddScoped<IProductRepository<Product>, ProductService>();
             services.AddControllers();
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -38,15 +36,34 @@ namespace OnlineShoppingCart
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHttpsRedirection();
+
             app.UseRouting();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllers();
             });
         }
+        //// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        //public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        //{
+        //    if (env.IsDevelopment())
+        //    {
+        //        app.UseDeveloperExceptionPage();
+        //    }
+
+        //    app.UseRouting();
+
+        //    app.UseEndpoints(endpoints =>
+        //    {
+        //        endpoints.MapGet("/", async context =>
+        //        {
+        //            await context.Response.WriteAsync("Hello World!");
+        //        });
+        //    });
+        //}
     }
 }

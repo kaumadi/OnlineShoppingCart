@@ -17,6 +17,8 @@ namespace OnlineShoppingCart.DataAccessLayer.Contexts
             public DbSet<Order> Orders { get; set; }
             public DbSet<OrderItem> OrderItems { get; set; }
             public DbSet<Payment> Payments { get; set; }
-        }
+            public DbSet<Payment> ProductImage { get; set; }
+
+    }
     
 }

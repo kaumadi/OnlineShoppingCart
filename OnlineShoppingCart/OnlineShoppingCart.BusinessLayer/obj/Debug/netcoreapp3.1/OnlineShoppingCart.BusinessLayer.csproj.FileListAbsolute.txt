@@ -6,3 +6,8 @@ E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineSh
 E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart.BusinessLayer\obj\Debug\netcoreapp3.1\OnlineShoppingCart.BusinessLayer.AssemblyInfo.cs
 E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart.BusinessLayer\obj\Debug\netcoreapp3.1\OnlineShoppingCart.BusinessLayer.dll
 E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart.BusinessLayer\obj\Debug\netcoreapp3.1\OnlineShoppingCart.BusinessLayer.pdb
+E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart.BusinessLayer\bin\Debug\netcoreapp3.1\OnlineShoppingCart.BusinessLayer.runtimeconfig.json
+E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart.BusinessLayer\bin\Debug\netcoreapp3.1\OnlineShoppingCart.BusinessLayer.runtimeconfig.dev.json
+E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart.BusinessLayer\bin\Debug\netcoreapp3.1\OnlineShoppingCart.DataAccessLayer.dll
+E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart.BusinessLayer\bin\Debug\netcoreapp3.1\OnlineShoppingCart.DataAccessLayer.pdb
+E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart.BusinessLayer\obj\Debug\netcoreapp3.1\OnlineShoppingCart.BusinessLayer.csproj.CopyComplete
