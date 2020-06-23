@@ -14,11 +14,12 @@ namespace OnlineShoppingCart.DataAccessLayer.Models
         public float UnitPrice { get; set; }
         public long UnitsInStock { get; set; }
         public string Description { get; set; }
+        public string ImagePath { get; set; }
 
         public Category Categories { get; set; }
 
         public ICollection<OrderItemProduct> OrderItemProducts { get; set; }
 
-        public ICollection<ProductImage> ProductImages { get; set; }
+        
     }
 }

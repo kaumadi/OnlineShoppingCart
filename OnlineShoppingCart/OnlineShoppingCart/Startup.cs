@@ -27,6 +27,11 @@ namespace OnlineShoppingCart
             services.AddDbContext<OnlineShoppingCartContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OnlineShoppingCartContext"), b => b.MigrationsAssembly("OnlineShoppingCart")));
             services.AddScoped<IProductRepository<Product>, ProductService>();
             services.AddControllers();
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
+
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -41,6 +46,7 @@ namespace OnlineShoppingCart
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseCors(options => options.AllowAnyOrigin());
 
             app.UseEndpoints(endpoints =>
             {

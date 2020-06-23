@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShoppingCart.BusinessLayer.IRepositories;
 using OnlineShoppingCart.DataAccessLayer.Models;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 namespace OnlineShoppingCart.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowOrigin")]
     [ApiController]
     public class ProductController : Controller
     {

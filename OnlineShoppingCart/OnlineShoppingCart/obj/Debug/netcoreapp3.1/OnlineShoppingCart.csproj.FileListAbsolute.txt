@@ -124,6 +124,6 @@ E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineSh
 E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart\obj\Debug\netcoreapp3.1\OnlineShoppingCart.MvcApplicationPartsAssemblyInfo.cache
 E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart\bin\Debug\netcoreapp3.1\OnlineShoppingCart.BusinessLayer.dll
 E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart\bin\Debug\netcoreapp3.1\OnlineShoppingCart.BusinessLayer.pdb
+E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart\obj\Debug\netcoreapp3.1\OnlineShoppingCart.MvcApplicationPartsAssemblyInfo.cache
