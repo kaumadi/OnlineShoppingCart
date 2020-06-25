@@ -1,0 +1,72 @@
+<!-- 
+<h1>Product List</h1>
+
+<p *ngIf="!(products$ | async)"><em>Loading...</em></p> -->
+<!-- <p>
+  <a [routerLink]="['/add']" class="btn btn-primary float-right mb-3">New post</a>
+</p> -->
+<!-- 
+<table class="table table-sm table-hover" *ngIf="(products$ | async)?.length>0">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Discription</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of (products$ | async)">
+      <td> 
+ 
+        <img src="E:\Kau's Stuff\projects\Angular\viewProduct\src\images\image1.jpg" width="150" height="150" /> 
+
+    </td> 
+      
+    
+      <td>{{ product.ProductId }}</td>
+      <td><a [routerLink]="[product.ProductId]">{{ product.productName }}</a></td>
+      <td>{{ product.unitPrice }}</td>
+      <td>{{ product.description }}</td> -->
+
+      <!-- <td>{{ blogPost.dt | date: "dd.MM.y" }}</td> -->
+      <!-- <td><a [routerLink]="['/blogpost/edit/', blogPost.postId]" class="btn btn-primary btn-sm float-right">Edit</a></td>
+      <td><a [routerLink]="" (click)="delete(blogPost.postId)" class="btn btn-danger btn-sm float-right">Delete</a></td> -->
+    <!-- </tr>
+  </tbody>
+</table> -->
+
+<!-- <h1>Explore Our Products</h1> -->
+<!-- <div *ngIf="products$.length === 0">
+  <p>Whoops, we don't have any products available right now.</p>
+  <p class="small">Is the API Server started?</p>
+ <pre>
+    cd ShoppingCart.Api\ShoppingCart.Api\
+    dotnet run
+  </pre> 
+</div> -->
+<!-- <div class="card mb-3" style="max-width: 540px;" *ngFor="let product of (products$ | async)">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+ 
+      <img src=https://localhost:44380+product.ImagePath width="150" height="150" /> 
+    </div>
+
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{product.productName}}</h5>
+        <p>{{product.description}}</p>
+        <p class="card-text">{{product.unitPrice | currency}}</p> -->
+        <!-- <select #quantity>
+          <option *ngFor="let option of quantityOptions" [value]="option">{{option}}</option>
+        </select> -->
+        <!-- <button (click)="addToCart(product, +quantity.value);">Add to Cart</button> -->
+      <!-- </div>
+    </div>
+  </div> -->
+  <!-- <div class="alert alert-success" role="alert" *ngIf="productAdded?.id === product.id">
+    Added {{quantity.value}} {{product.name}} to your <a routerLink="/cart">Cart</a>.
+  </div> -->
+<!-- </div> -->
