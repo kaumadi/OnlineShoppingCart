@@ -13,31 +13,37 @@ namespace OnlineShoppingCart.Controllers
     [ApiController]
     public class ProductController : Controller
     {
-     
-            private readonly IProductRepository<Product> _productRepository;
+        #region private fields
+        private readonly IProductRepository<Product> _productRepository;
+        #endregion
 
-            public ProductController(IProductRepository<Product> productRepository)
+        #region Contructor
+        public ProductController(IProductRepository<Product> productRepository)
             {
                 _productRepository = productRepository ?? throw new ArgumentNullException(nameof(_productRepository)); ;
             }
+        #endregion
 
-            // GET: api/product
-            [HttpGet]
-            public async Task<IActionResult> GetAllAsync()
+        #region GetAllProductsAsync 
+        // GET: api/product
+        [HttpGet]
+            public async Task<IActionResult> GetAllProductsAsync()
             {
-                var results = await _productRepository?.GetAllAsync();
+                var results = await _productRepository?.GetAllProductsAsync();
                 return Ok(results);
             }
+        #endregion
 
-            // GET api/<controller>/1
-            [HttpGet("{id}", Name = "GetOneProductAsync")]
-            public async Task<IActionResult> GetOneProductAsync(long id)
+        #region GetProductByIdAsync 
+        // GET api/<controller>/1
+        [HttpGet("{id}", Name = "GetProductByIdAsync")]
+            public async Task<IActionResult> GetProductByIdAsync(long id)
             {
-                var products = await _productRepository?.GetAsync(id);
+                var products = await _productRepository?.GetPrductByIdAsync(id);
 
                 if (products == null)
                 {
-                    ModelState.AddModelError("id", "provided id cannot be found");
+                    ModelState.AddModelError("id", "Provided Id cannot be found");
                 }
                 if (!ModelState.IsValid)
                 {
@@ -45,6 +51,7 @@ namespace OnlineShoppingCart.Controllers
                 }
                 return Ok(products);
             }
+        #endregion
 
     }
-    }
+}

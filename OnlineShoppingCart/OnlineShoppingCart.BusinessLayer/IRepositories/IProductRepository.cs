@@ -8,8 +8,8 @@ namespace OnlineShoppingCart.BusinessLayer.IRepositories
 {
     public interface IProductRepository<TEntity>
     {
-        Task<IEnumerable<Product>> GetAllAsync();
-        Task<Product> GetAsync(long item);
+        Task<IEnumerable<Product>> GetAllProductsAsync();
+        Task<Product> GetPrductByIdAsync(long item);
 
 
     }

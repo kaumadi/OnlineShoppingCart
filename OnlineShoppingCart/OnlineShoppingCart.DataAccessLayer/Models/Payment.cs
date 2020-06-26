@@ -7,9 +7,7 @@ namespace OnlineShoppingCart.DataAccessLayer.Models
     {
         [ForeignKey("OrderID")]
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long PaymentId { get; set; }
+        public int PaymentId { get; set; }
         public string PaymentType { get; set; }
 
         public Order Orders { get; set; }

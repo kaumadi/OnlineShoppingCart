@@ -5,13 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200616081820_AddProductImage.cs" />
-    <Compile Remove="Migrations\20200616081820_AddProductImage.Designer.cs" />
-    <Compile Remove="Migrations\20200616082302_AddProductImage.cs" />
-    <Compile Remove="Migrations\20200616082302_AddProductImage.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />

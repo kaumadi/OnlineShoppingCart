@@ -21,9 +21,9 @@ namespace OnlineShoppingCart.Migrations
 
             modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.Category", b =>
                 {
-                    b.Property<long>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CategoryName")
@@ -36,9 +36,9 @@ namespace OnlineShoppingCart.Migrations
 
             modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.Customer", b =>
                 {
-                    b.Property<long>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AddressLine1")
@@ -55,7 +55,6 @@ namespace OnlineShoppingCart.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
@@ -76,22 +75,22 @@ namespace OnlineShoppingCart.Migrations
 
             modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.Order", b =>
                 {
-                    b.Property<long>("OrderId")
+                    b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("CustomersCustomerId")
-                        .HasColumnType("bigint");
+                    b.Property<int?>("CustomersCustomerId")
+                        .HasColumnType("int");
 
-                    b.Property<float>("Discount")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<float>("TotalAmount")
-                        .HasColumnType("real");
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("OrderId");
 
@@ -102,22 +101,22 @@ namespace OnlineShoppingCart.Migrations
 
             modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.OrderItem", b =>
                 {
-                    b.Property<long>("OrderItemId")
+                    b.Property<int>("OrderItemId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("OrdersOrderId")
-                        .HasColumnType("bigint");
+                    b.Property<int?>("OrdersOrderId")
+                        .HasColumnType("int");
 
-                    b.Property<long>("Quantity")
-                        .HasColumnType("bigint");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
-                    b.Property<float>("TotalAmount")
-                        .HasColumnType("real");
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<float>("UnitPrice")
-                        .HasColumnType("real");
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("OrderItemId");
 
@@ -128,24 +127,18 @@ namespace OnlineShoppingCart.Migrations
 
             modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.OrderItemProduct", b =>
                 {
-                    b.Property<int>("OrderItemProductID")
+                    b.Property<int>("OrderItemProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("OrderItemID")
+                    b.Property<int?>("OrderItemsOrderItemId")
                         .HasColumnType("int");
 
-                    b.Property<long?>("OrderItemsOrderItemId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("ProductID")
+                    b.Property<int?>("ProductsProductId")
                         .HasColumnType("int");
 
-                    b.Property<long?>("ProductsProductId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("OrderItemProductID");
+                    b.HasKey("OrderItemProductId");
 
                     b.HasIndex("OrderItemsOrderItemId");
 
@@ -156,13 +149,13 @@ namespace OnlineShoppingCart.Migrations
 
             modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.Payment", b =>
                 {
-                    b.Property<long>("PaymentId")
+                    b.Property<int>("PaymentId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("OrdersOrderId")
-                        .HasColumnType("bigint");
+                    b.Property<int?>("OrdersOrderId")
+                        .HasColumnType("int");
 
                     b.Property<string>("PaymentType")
                         .HasColumnType("nvarchar(max)");
@@ -176,13 +169,13 @@ namespace OnlineShoppingCart.Migrations
 
             modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.Product", b =>
                 {
-                    b.Property<long>("ProductId")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("CategoriesCategoryId")
-                        .HasColumnType("bigint");
+                    b.Property<int?>("CategoriesCategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -191,14 +184,13 @@ namespace OnlineShoppingCart.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("UnitPrice")
-                        .HasColumnType("real");
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<long>("UnitsInStock")
-                        .HasColumnType("bigint");
+                    b.Property<int>("UnitsInStock")
+                        .HasColumnType("int");
 
                     b.HasKey("ProductId");
 

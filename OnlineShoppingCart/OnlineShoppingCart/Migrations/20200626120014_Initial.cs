@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OnlineShoppingCart.Migrations
 {
-    public partial class EFCoreCodeFirstSampleModelsOnlineShoppingCartContext : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace OnlineShoppingCart.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    CategoryId = table.Column<long>(nullable: false)
+                    CategoryId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CategoryName = table.Column<string>(nullable: true)
                 },
@@ -24,9 +24,9 @@ namespace OnlineShoppingCart.Migrations
                 name: "Customers",
                 columns: table => new
                 {
-                    CustomerId = table.Column<long>(nullable: false)
+                    CustomerId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     ContactNumber = table.Column<string>(maxLength: 12, nullable: true),
                     AddressLine1 = table.Column<string>(nullable: true),
@@ -44,13 +44,14 @@ namespace OnlineShoppingCart.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    ProductId = table.Column<long>(nullable: false)
+                    ProductId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductName = table.Column<string>(nullable: false),
-                    UnitPrice = table.Column<float>(nullable: false),
-                    UnitsInStock = table.Column<long>(nullable: false),
+                    ProductName = table.Column<string>(nullable: true),
+                    UnitPrice = table.Column<decimal>(nullable: false),
+                    UnitsInStock = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    CategoriesCategoryId = table.Column<long>(nullable: true)
+                    ImagePath = table.Column<string>(nullable: true),
+                    CategoriesCategoryId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -67,12 +68,12 @@ namespace OnlineShoppingCart.Migrations
                 name: "Orders",
                 columns: table => new
                 {
-                    OrderId = table.Column<long>(nullable: false)
+                    OrderId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TotalAmount = table.Column<float>(nullable: false),
-                    Discount = table.Column<float>(nullable: false),
+                    TotalAmount = table.Column<decimal>(nullable: false),
+                    Discount = table.Column<decimal>(nullable: false),
                     OrderDate = table.Column<DateTime>(nullable: false),
-                    CustomersCustomerId = table.Column<long>(nullable: true)
+                    CustomersCustomerId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -89,12 +90,12 @@ namespace OnlineShoppingCart.Migrations
                 name: "OrderItems",
                 columns: table => new
                 {
-                    OrderItemId = table.Column<long>(nullable: false)
+                    OrderItemId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UnitPrice = table.Column<float>(nullable: false),
-                    Quantity = table.Column<long>(nullable: false),
-                    TotalAmount = table.Column<float>(nullable: false),
-                    OrdersOrderId = table.Column<long>(nullable: true)
+                    UnitPrice = table.Column<decimal>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    TotalAmount = table.Column<decimal>(nullable: false),
+                    OrdersOrderId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -108,19 +109,19 @@ namespace OnlineShoppingCart.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Payments",
+                name: "Payment",
                 columns: table => new
                 {
-                    PaymentId = table.Column<long>(nullable: false)
+                    PaymentId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PaymentType = table.Column<string>(nullable: true),
-                    OrdersOrderId = table.Column<long>(nullable: true)
+                    OrdersOrderId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Payments", x => x.PaymentId);
+                    table.PrimaryKey("PK_Payment", x => x.PaymentId);
                     table.ForeignKey(
-                        name: "FK_Payments_Orders_OrdersOrderId",
+                        name: "FK_Payment_Orders_OrdersOrderId",
                         column: x => x.OrdersOrderId,
                         principalTable: "Orders",
                         principalColumn: "OrderId",
@@ -131,16 +132,14 @@ namespace OnlineShoppingCart.Migrations
                 name: "OrderItemProduct",
                 columns: table => new
                 {
-                    OrderItemProductID = table.Column<int>(nullable: false)
+                    OrderItemProductId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductID = table.Column<int>(nullable: false),
-                    ProductsProductId = table.Column<long>(nullable: true),
-                    OrderItemID = table.Column<int>(nullable: false),
-                    OrderItemsOrderItemId = table.Column<long>(nullable: true)
+                    ProductsProductId = table.Column<int>(nullable: true),
+                    OrderItemsOrderItemId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderItemProduct", x => x.OrderItemProductID);
+                    table.PrimaryKey("PK_OrderItemProduct", x => x.OrderItemProductId);
                     table.ForeignKey(
                         name: "FK_OrderItemProduct_OrderItems_OrderItemsOrderItemId",
                         column: x => x.OrderItemsOrderItemId,
@@ -176,8 +175,8 @@ namespace OnlineShoppingCart.Migrations
                 column: "CustomersCustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payments_OrdersOrderId",
-                table: "Payments",
+                name: "IX_Payment_OrdersOrderId",
+                table: "Payment",
                 column: "OrdersOrderId");
 
             migrationBuilder.CreateIndex(
@@ -192,7 +191,7 @@ namespace OnlineShoppingCart.Migrations
                 name: "OrderItemProduct");
 
             migrationBuilder.DropTable(
-                name: "Payments");
+                name: "Payment");
 
             migrationBuilder.DropTable(
                 name: "OrderItems");
