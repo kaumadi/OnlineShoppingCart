@@ -24,7 +24,6 @@ export class ProductViewComponent implements OnInit {
   loadProducts() {
     this.products$ = this.productviewService.getAllAsync();
   }
- 
 
 
 }
