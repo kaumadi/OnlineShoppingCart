@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-
 import { ProductviewService } from '../shared/services/productview.service';
 import { Product } from '../shared/models/product';
 
@@ -13,7 +12,6 @@ export class ProductViewComponent implements OnInit {
 
   products$: Observable<Product[]>;
  
-
   constructor(private productviewService: ProductviewService) {
   }
 
@@ -24,6 +22,6 @@ export class ProductViewComponent implements OnInit {
   loadProducts() {
     this.products$ = this.productviewService.getAllAsync();
   }
-
-
+ 
+  
 }
