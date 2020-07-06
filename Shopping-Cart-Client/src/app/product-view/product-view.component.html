@@ -1,22 +1,20 @@
 
- 
-
           <!-- Product List section -->
       <section class="product-filter-section">
       <div class="container">
         <div class="section-title">
           <h2>BROWSE TOP SELLING PRODUCTS</h2>
         </div>
-        
+  
         <div class="row">
           <div class="col-lg-3 col-sm-6"*ngFor="let product of (products$ | async); let i = index;">
             <div class="product-item">
               <div class="pi-pic">
-                <img src="./assets/productimages/{{product.imagePath}}" alt="">              
-                <div class="pi-links">
-                  <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                <img src="./assets/productimages/{{product.imagePath}}" alt="">        
+                 <div class="pi-links">
+                  <a class="add-card" (click)="addToCart(product)"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                   <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                </div>
+                </div> 
               </div>
               <div class="pi-text">
                 <h6>{{product.productName}}</h6>
@@ -24,6 +22,7 @@
               </div>
               <div>
                 <p>{{product.description}} </p>
+                <!-- <p hidden>Avialable Units {{product.unitsInStock}} </p> -->
               </div>
             </div>
           </div>

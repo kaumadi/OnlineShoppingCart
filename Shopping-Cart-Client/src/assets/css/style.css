@@ -133,7 +133,7 @@ ol {
 	padding: 18px 47px 14px;
 	border-radius: 50px;
 	text-transform: uppercase;
-	background: #f51167;
+	background: #009e0d;
 	color: #fff;
 	line-height: normal;
 	cursor: pointer;
@@ -159,7 +159,9 @@ ol {
 .site-btn.sb-dark {
 	background: #413a3a;
 }
-
+.site-btn.sb-yellow {
+	background: #ecf00d;
+}
 .site-btn.sb-dark.sb-line {
 	background-color: transparent;
 	color: #111111;
@@ -1844,7 +1846,7 @@ ol {
 }
 
 .cart-table .total-cost {
-	background: #f51167;
+	background: #080146;
 	margin: 0 -34px;
 	text-align: right;
 	padding: 22px 0;

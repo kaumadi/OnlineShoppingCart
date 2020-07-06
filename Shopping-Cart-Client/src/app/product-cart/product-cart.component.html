@@ -1,21 +1,16 @@
 
-	<!-- Page info -->
-	<div class="page-top-info">
-		<div class="container">
-			<h4>Your cart</h4>
-			<div class="site-pagination">
-				<a href="">Home</a> /
-				
-			</div>
-		</div>
-	</div>
-	<!-- Page info end -->
+	<!-- <a  routerLink="">Home</a>
+	<h3>Cart</h3>
+	<div *ngFor="let item of items">
+	  <span>{{ item.productId }}</span>
+	  <span>{{ item.productName }}</span>
+	</div> -->
 
 
-	<!-- cart section end -->
+
 	<section class="cart-section spad">
 		<div class="container">
-			<div class="row">
+			<div class="row" >
 				<div class="col-lg-8">
 					<div class="cart-table">
 						<h3>Your Cart</h3>
@@ -23,46 +18,56 @@
 							<table>
 							<thead>
 								<tr>
-									<th class="product-th">Product</th>
-									<th class="quy-th">Quantity</th>
-									<th class="size-th">Description</th>
-									<th class="total-th">Price</th>
+									<th><h6>Product</h6></th>
+									<!-- <th class="quy-th">Quantity</th> -->
+									 
+									<th><h6>Price LKR</h6></th>
+									<th><h6>Action</h6></th> 
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td class="product-col">
-										<img src="img/cart/1.jpg" alt="">
-										<div class="pc-title">
-											<h4>Animal Print Dress</h4>
-											<p>$45.90</p>
+								<tr *ngFor="let item of items">
+									<td >
+										<!-- <img src="img/cart/1.jpg" alt=""> -->
+										<div>
+											<h6>{{item.productName}}</h6>
+											<!-- <p>$45.90</p> -->
 										</div>
 									</td>
-									<td class="quy-col">
-										<div class="quantity">
-					                        <div class="pro-qty">
-												<input type="text" value="1">
+									<td >
+										<div>
+					                        <div>
+												<!-- <input type="text" value="1"> -->
+												<h6>{{ item.unitPrice| currency:'LKR'}}</h6>
 											</div>
                     					</div>
 									</td>
-									<td class="size-col"><h4>Size M</h4></td>
-									<td class="total-col"><h4>$45.90</h4></td>
+									<!-- <td class="size-col"><h4>{{item.quantity}}</h4></td>
+									<td class="total-col"><h4>$45.90</h4></td> -->
+									<td >
+										<div >
+					                        <div>
+												<button type="button" class="close" aria-label="Remove Item" (click)="removeItemFromCart(item.id)">
+													<span aria-hidden="true">&times;</span>
+												  </button> 
+											</div>
+                    					</div>
+									</td>
 								</tr>			
 							</tbody>
 						</table>
 						</div>
 						<div class="total-cost">
-							<h6>Total <span>$99.90</span></h6>
+							<!-- <p class="text-center"><button type="button" class="btn btn-light" (click)="emptyCart()">Empty Cart</button></p> -->
+							<h6>Total <span>{{totalAmmount | currency:'LKR'}}</span></h6>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-4 card-right">
-					
+					<a class="site-btn sb-yellow" (click)="emptyCart()"> Clear Cart</a>
 					<a href="" class="site-btn">Proceed to checkout</a>
-					<a href="" class="site-btn sb-dark">Continue shopping</a>
+					<a routerLink="" class="site-btn sb-dark">Continue shopping</a>
 				</div>
 			</div>
 		</div>
 	</section>
-	<!-- cart section end -->
-

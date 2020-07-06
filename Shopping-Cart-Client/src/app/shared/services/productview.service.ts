@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { Product } from '../models/product';
 import { catchError } from 'rxjs/operators';
 import { retry } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductviewService {
+  items = [];
+
 
   myAppUrl: string;
   myApiUrl: string;
@@ -30,6 +33,50 @@ export class ProductviewService {
       catchError(this.errorHandler)
     );
   }
+
+  addToCart(product) {
+    this.items.push(product);
+    this.items.length;
+  }
+
+  getItems(){
+    return this.items;
+  }
+  
+  getcount(){
+  return this.items.length;
+  }
+
+
+  clearCart() {
+    this.items = [];
+    return this.items;
+  }
+
+  
+  // Calculate total price on item added to the cart
+  getTotalPrice() {
+    let total = 0;
+
+    this.items.map(item => {
+      total += item.unitPrice;
+    });
+
+    return total
+  }
+
+ // Remove all the items added to the cart
+ emptryCart() {
+  this.items.length = 0;
+}
+
+removeProductFromCart(productId) {
+  this.items.map((item, index) => {
+    if (item.id === productId) {
+      this.items.splice(index, 1);
+    }
+  });
+}
 
   errorHandler(error) {
     let errorMessage = '';

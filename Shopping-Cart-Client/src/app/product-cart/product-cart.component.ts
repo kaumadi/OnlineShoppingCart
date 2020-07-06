@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductviewService } from '../shared/services/productview.service';
+import { empty } from 'rxjs';
 
 @Component({
   selector: 'app-product-cart',
@@ -6,10 +8,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-cart.component.css']
 })
 export class ProductCartComponent implements OnInit {
+  items;
+  public totalAmmount;
 
-  constructor() { }
+  constructor(private productviewService: ProductviewService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.items = this.productviewService.getItems();
+    console.log(this.items);
+    this.getTotalAmount();
+    this.productviewService.getcount();
+    console.log( this.productviewService.getcount());
+    
   }
 
+  getTotalAmount(){
+    this.totalAmmount = this.productviewService.getTotalPrice();
+  }
+
+  emptyCart() {
+    this.productviewService.emptryCart();
+    this.getTotalAmount()==null;
+  }
+
+  removeItemFromCart(productId) {
+    this.productviewService.removeProductFromCart(productId);
+
+  }
 }
