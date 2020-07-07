@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductviewService } from '../shared/services/productview.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -11,12 +10,10 @@ export class HeaderComponent implements OnInit {
   public cartProductCount;
 
 
-  constructor(private productviewService: ProductviewService) { }
+  constructor(private productviewService: ProductviewService) {}
 
   ngOnInit(){
-   
-     this.cartProductCount=this.productviewService.getItems().length;
-    console.log( this.cartProductCount);
+   this.cartProductCount=this.productviewService.getcount();
   }
 
 }

@@ -11,6 +11,8 @@ import { ProductviewService } from './shared/services/productview.service';
 import { ProductCartComponent } from './product-cart/product-cart.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
+import { Globals } from './shared/globals';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +30,7 @@ import { HeaderComponent } from './header/header.component';
     BrowserAnimationsModule,
     FormsModule
   ],
-  providers: [ProductviewService],
+  providers: [ProductviewService,Globals],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

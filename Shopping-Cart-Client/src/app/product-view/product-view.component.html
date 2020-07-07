@@ -1,11 +1,12 @@
-
-          <!-- Product List section -->
+<div class="fixed-top">
+        <button type="button" class="btn btn-secondary btn-lg float-right" routerLink="/productCart"> <i class="flaticon-bag"></i><span class="badge badge-dark">{{cartitemcount}}</span></button>
+      </div>
+  
       <section class="product-filter-section">
       <div class="container">
         <div class="section-title">
           <h2>BROWSE TOP SELLING PRODUCTS</h2>
         </div>
-  
         <div class="row">
           <div class="col-lg-3 col-sm-6"*ngFor="let product of (products$ | async); let i = index;">
             <div class="product-item">
@@ -30,6 +31,7 @@
         </div>
         
       </div>
+      
     </section>
       <!-- Product List section end -->
   

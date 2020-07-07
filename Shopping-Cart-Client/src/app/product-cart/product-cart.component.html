@@ -1,14 +1,4 @@
-
-	<!-- <a  routerLink="">Home</a>
-	<h3>Cart</h3>
-	<div *ngFor="let item of items">
-	  <span>{{ item.productId }}</span>
-	  <span>{{ item.productName }}</span>
-	</div> -->
-
-
-
-	<section class="cart-section spad">
+<section class="cart-section spad">
 		<div class="container">
 			<div class="row" >
 				<div class="col-lg-8">
@@ -18,9 +8,7 @@
 							<table>
 							<thead>
 								<tr>
-									<th><h6>Product</h6></th>
-									<!-- <th class="quy-th">Quantity</th> -->
-									 
+									<th><h6>Product Name</h6></th>		
 									<th><h6>Price LKR</h6></th>
 									<th><h6>Action</h6></th> 
 								</tr>
@@ -31,19 +19,16 @@
 										<!-- <img src="img/cart/1.jpg" alt=""> -->
 										<div>
 											<h6>{{item.productName}}</h6>
-											<!-- <p>$45.90</p> -->
 										</div>
 									</td>
+									
 									<td >
 										<div>
 					                        <div>
-												<!-- <input type="text" value="1"> -->
 												<h6>{{ item.unitPrice| currency:'LKR'}}</h6>
 											</div>
                     					</div>
 									</td>
-									<!-- <td class="size-col"><h4>{{item.quantity}}</h4></td>
-									<td class="total-col"><h4>$45.90</h4></td> -->
 									<td >
 										<div >
 					                        <div>
@@ -58,7 +43,6 @@
 						</table>
 						</div>
 						<div class="total-cost">
-							<!-- <p class="text-center"><button type="button" class="btn btn-light" (click)="emptyCart()">Empty Cart</button></p> -->
 							<h6>Total <span>{{totalAmmount | currency:'LKR'}}</span></h6>
 						</div>
 					</div>
@@ -66,7 +50,7 @@
 				<div class="col-lg-4 card-right">
 					<a class="site-btn sb-yellow" (click)="emptyCart()"> Clear Cart</a>
 					<a href="" class="site-btn">Proceed to checkout</a>
-					<a routerLink="" class="site-btn sb-dark">Continue shopping</a>
+					<a routerLink=" " class="site-btn sb-dark">Continue shopping</a>
 				</div>
 			</div>
 		</div>

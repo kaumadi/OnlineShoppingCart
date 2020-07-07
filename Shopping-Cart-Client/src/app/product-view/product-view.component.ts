@@ -4,8 +4,6 @@ import { ProductviewService } from '../shared/services/productview.service';
 import { Product } from '../shared/models/product';
 
 
-
-
 @Component({
   selector: 'app-product-view',
   templateUrl: './product-view.component.html',
@@ -16,12 +14,17 @@ export class ProductViewComponent implements OnInit {
   products$: Observable<Product[]>;
   totalcartvalue = 0;
   conditionToDisaply=false;
+  public cartitemcount:number;
+ 
  
   constructor(private productviewService: ProductviewService) {
+   
   }
 
   ngOnInit() {
     this.loadProducts();
+    this.cartitemcount=this.productviewService.getItems().length;
+    
   }
 
   loadProducts() {
@@ -31,5 +34,9 @@ export class ProductViewComponent implements OnInit {
   addToCart(product) {
     this.productviewService.addToCart( product);
     window.alert('Your product has been added to the cart!');
+    this.cartitemcount=this.productviewService.getItems().length;
+    
+    console.log( this.cartitemcount);
+   
   }
 }
