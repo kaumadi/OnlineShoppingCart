@@ -14,11 +14,11 @@ namespace OnlineShoppingCart.Controllers
     public class ProductController : Controller
     {
         #region private fields
-        private readonly IProductRepository<Product> _productRepository;
+        private readonly IProductRepository _productRepository;
         #endregion
 
-        #region Contructor
-        public ProductController(IProductRepository<Product> productRepository)
+        #region Constructor
+        public ProductController(IProductRepository productRepository)
             {
                 _productRepository = productRepository ?? throw new ArgumentNullException(nameof(_productRepository)); ;
             }

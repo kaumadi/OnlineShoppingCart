@@ -33,6 +33,7 @@ export class ProductCartComponent implements OnInit {
 
   removeItemFromCart(productId) {
     this.productviewService.removeProductFromCart(productId);
+    this.getTotalAmount();
 
   }
 }

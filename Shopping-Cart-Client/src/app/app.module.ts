@@ -12,6 +12,33 @@ import { ProductCartComponent } from './product-cart/product-cart.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { Globals } from './shared/globals';
+import { CustomerRegistrationComponent } from './customer-registration/customer-registration.component';
+
+// Override JSON.parse for debug purposes
+(function () {
+  var parse = JSON.parse;
+
+  JSON.parse = function (str) {
+      try {
+          return parse.apply(this, arguments);
+      } catch (e) {
+          console.log('Error parsing', arguments);
+          throw e;
+      }
+  }
+}());
+
+
+// Override XMLHttpRequest.open
+(function() {
+  var origOpen = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function() {
+      this.addEventListener('load', function() {
+          console.log('Http Response', this.responseText, this);
+      });
+      origOpen.apply(this, arguments);
+  };
+})();
 
 
 @NgModule({
@@ -20,7 +47,8 @@ import { Globals } from './shared/globals';
     ProductViewComponent,
     ProductCartComponent,
     FooterComponent,
-    HeaderComponent 
+    HeaderComponent,
+    CustomerRegistrationComponent,
   ],
   imports: [
     BrowserModule,

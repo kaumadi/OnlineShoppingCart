@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using OnlineShoppingCart.DataAccessLayer.Models;
 
 namespace OnlineShoppingCart.DataAccessLayer.Contexts
 {
   
-        public class OnlineShoppingCartContext : DbContext
-        {
+        public class OnlineShoppingCartContext : IdentityDbContext<AppUser>
+    {
             public OnlineShoppingCartContext(DbContextOptions options)
                   : base(options)
             {

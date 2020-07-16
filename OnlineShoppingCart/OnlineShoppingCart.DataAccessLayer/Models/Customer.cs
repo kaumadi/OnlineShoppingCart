@@ -5,19 +5,11 @@ namespace OnlineShoppingCart.DataAccessLayer.Models
 {
     public class Customer
     {
-        public int CustomerId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        [MaxLength(12)]
-        public string ContactNumber { get; set; }
-        public string AddressLine1 { get; set; }
-        public string AddressLine2 { get; set; }
-        public string Email { get; set; }
-        [Required()]
-        public string UserName { get; set; }
-        [Required()]
-        public string Password { get; set; }
-
+        public int Id { get; set; }
+        public string IdentityId { get; set; }
+        public AppUser Identity { get; set; }  // navigation property
+        public string Address { get; set; }
+      
         public ICollection<Order> Orders { get; set; }
     }
 }

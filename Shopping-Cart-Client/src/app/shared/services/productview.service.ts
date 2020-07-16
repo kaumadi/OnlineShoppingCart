@@ -6,13 +6,15 @@ import { Product } from '../models/product';
 import { catchError } from 'rxjs/operators';
 import { retry } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { Globals } from '../globals';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductviewService {
   items = [];
-
+  public cartcount:number;
+  formData: Product;
 
   myAppUrl: string;
   myApiUrl: string;
@@ -21,9 +23,10 @@ export class ProductviewService {
       'Content-Type': 'application/json; charset=utf-8'
     })
   };
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,public globals:Globals) {
       this.myAppUrl = environment.appUrl;
       this.myApiUrl = 'api/Product/';
+       this.cartcount=globals.count;
   }
 
   getAllAsync(): Observable<Product[]> {
@@ -45,15 +48,9 @@ export class ProductviewService {
   
   getcount(){
   return this.items.length;
+
   }
 
-
-  clearCart() {
-    this.items = [];
-    return this.items;
-  }
-
-  
   // Calculate total price on item added to the cart
   getTotalPrice() {
     let total = 0;
@@ -66,29 +63,27 @@ export class ProductviewService {
   }
 
  // Remove all the items added to the cart
- emptryCart() {
-  this.items.length = 0;
-}
+  emptryCart() {
+    this.items.length = 0;
+  }
+ 
+  removeProductFromCart(productId) {
+    var item=this.items.indexOf(productId);
+    this.items.splice(item);
 
-removeProductFromCart(productId) {
-  this.items.map((item, index) => {
-    if (item.id === productId) {
-      this.items.splice(index, 1);
-    }
-  });
-}
 
+  }
   errorHandler(error) {
     let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // Get client-side error
-      errorMessage = error.error.message;
-    } else {
-      // Get server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    console.log(errorMessage);
-    return throwError(errorMessage);
+      if (error.error instanceof ErrorEvent) {
+        // Get client-side error
+        errorMessage = error.error.message;
+      } else {
+        // Get server-side error
+        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      }
+        console.log(errorMessage);
+      return throwError(errorMessage);
   }
   
 }

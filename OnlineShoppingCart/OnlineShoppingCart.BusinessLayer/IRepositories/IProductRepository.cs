@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OnlineShoppingCart.BusinessLayer.IRepositories
 {
-    public interface IProductRepository<TEntity>
+    public interface IProductRepository
     {
         Task<IEnumerable<Product>> GetAllProductsAsync();
         Task<Product> GetPrductByIdAsync(long item);

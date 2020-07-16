@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OnlineShoppingCart.BusinessLayer.Repositories
 {
-    public class ProductService : IProductRepository<Product>
+    public class ProductService : IProductRepository
     {
         readonly OnlineShoppingCartContext _shoppingcartContext;
 
