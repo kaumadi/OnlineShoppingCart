@@ -50,7 +50,6 @@ namespace OnlineShoppingCart.Controllers
 
                 return new BadRequestObjectResult("Bad Request Object Result");
             }
-
             
             await _accountRepository?.AddNewUser(model, userIdentity);
            
