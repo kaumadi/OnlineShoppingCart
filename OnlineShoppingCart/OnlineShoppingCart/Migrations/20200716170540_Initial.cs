@@ -62,6 +62,25 @@ namespace OnlineShoppingCart.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Customers",
+                columns: table => new
+                {
+                    CustomerId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Contact = table.Column<string>(nullable: true),
+                    UserName = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customers", x => x.CustomerId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -168,7 +187,7 @@ namespace OnlineShoppingCart.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customers",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -178,9 +197,9 @@ namespace OnlineShoppingCart.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Customers_AspNetUsers_IdentityId",
+                        name: "FK_Users_AspNetUsers_IdentityId",
                         column: x => x.IdentityId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -220,15 +239,22 @@ namespace OnlineShoppingCart.Migrations
                     TotalAmount = table.Column<decimal>(nullable: false),
                     Discount = table.Column<decimal>(nullable: false),
                     OrderDate = table.Column<DateTime>(nullable: false),
-                    CustomersId = table.Column<int>(nullable: true)
+                    CustomersCustomerId = table.Column<int>(nullable: true),
+                    UserId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderId);
                     table.ForeignKey(
-                        name: "FK_Orders_Customers_CustomersId",
-                        column: x => x.CustomersId,
+                        name: "FK_Orders_Customers_CustomersCustomerId",
+                        column: x => x.CustomersCustomerId,
                         principalTable: "Customers",
+                        principalColumn: "CustomerId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Orders_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -341,11 +367,6 @@ namespace OnlineShoppingCart.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Customers_IdentityId",
-                table: "Customers",
-                column: "IdentityId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_OrderItemProduct_OrderItemsOrderItemId",
                 table: "OrderItemProduct",
                 column: "OrderItemsOrderItemId");
@@ -361,9 +382,14 @@ namespace OnlineShoppingCart.Migrations
                 column: "OrdersOrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomersId",
+                name: "IX_Orders_CustomersCustomerId",
                 table: "Orders",
-                column: "CustomersId");
+                column: "CustomersCustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_UserId",
+                table: "Orders",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payment_OrdersOrderId",
@@ -374,6 +400,11 @@ namespace OnlineShoppingCart.Migrations
                 name: "IX_Products_CategoriesCategoryId",
                 table: "Products",
                 column: "CategoriesCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_IdentityId",
+                table: "Users",
+                column: "IdentityId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -416,6 +447,9 @@ namespace OnlineShoppingCart.Migrations
 
             migrationBuilder.DropTable(
                 name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

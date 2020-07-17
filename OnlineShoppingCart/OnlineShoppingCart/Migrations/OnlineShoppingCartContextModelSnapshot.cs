@@ -238,7 +238,7 @@ namespace OnlineShoppingCart.Migrations
 
             modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.Customer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -246,12 +246,25 @@ namespace OnlineShoppingCart.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdentityId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("Contact")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("IdentityId");
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
                 });
@@ -263,7 +276,7 @@ namespace OnlineShoppingCart.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CustomersId")
+                    b.Property<int?>("CustomersCustomerId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Discount")
@@ -275,9 +288,14 @@ namespace OnlineShoppingCart.Migrations
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("OrderId");
 
-                    b.HasIndex("CustomersId");
+                    b.HasIndex("CustomersCustomerId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -382,6 +400,26 @@ namespace OnlineShoppingCart.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdentityId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdentityId");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -433,18 +471,15 @@ namespace OnlineShoppingCart.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.Customer", b =>
-                {
-                    b.HasOne("OnlineShoppingCart.DataAccessLayer.Models.AppUser", "Identity")
-                        .WithMany()
-                        .HasForeignKey("IdentityId");
-                });
-
             modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.Order", b =>
                 {
                     b.HasOne("OnlineShoppingCart.DataAccessLayer.Models.Customer", "Customers")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomersId");
+                        .HasForeignKey("CustomersCustomerId");
+
+                    b.HasOne("OnlineShoppingCart.DataAccessLayer.Models.User", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.OrderItem", b =>
@@ -477,6 +512,13 @@ namespace OnlineShoppingCart.Migrations
                     b.HasOne("OnlineShoppingCart.DataAccessLayer.Models.Category", "Categories")
                         .WithMany("Products")
                         .HasForeignKey("CategoriesCategoryId");
+                });
+
+            modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.User", b =>
+                {
+                    b.HasOne("OnlineShoppingCart.DataAccessLayer.Models.AppUser", "Identity")
+                        .WithMany()
+                        .HasForeignKey("IdentityId");
                 });
 #pragma warning restore 612, 618
         }

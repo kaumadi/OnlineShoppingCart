@@ -17,7 +17,7 @@ namespace XUnitTestOnlineShoppingCart
         public async Task Get_All_Products_Count_Check_Using_Moq()
         {
             // Arrange
-            var serviceMock = new Mock<IProductRepository<Product>>();
+            var serviceMock = new Mock<IProductRepository>();
 
             IEnumerable<Product> plist = new List<Product> { };
             serviceMock.Setup(x => x.GetAllProductsAsync()).ReturnsAsync(() => new List<Product> {

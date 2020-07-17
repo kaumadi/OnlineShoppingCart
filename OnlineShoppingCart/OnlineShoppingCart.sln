@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShoppingCart.Business
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShoppingCart.DataAccessLayer", "OnlineShoppingCart.DataAccessLayer\OnlineShoppingCart.DataAccessLayer.csproj", "{D70855F8-6C32-464B-9E92-58D4A31A4919}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestOnlineShoppingCart", "XUnitTestOnlineShoppingCart\XUnitTestOnlineShoppingCart.csproj", "{AA97F3A8-CB4A-4631-809C-FC4D69CB7959}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTestOnlineShoppingCart", "XUnitTestOnlineShoppingCart\XUnitTestOnlineShoppingCart.csproj", "{AA97F3A8-CB4A-4631-809C-FC4D69CB7959}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A1D4791D-6684-42A6-9147-937C4B394072}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

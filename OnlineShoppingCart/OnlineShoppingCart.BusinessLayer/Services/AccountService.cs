@@ -24,7 +24,7 @@ namespace OnlineShoppingCart.BusinessLayer.Services
         public async Task<IActionResult> AddNewUser(RegistrationViewModel model,AppUser userIdentity)
         {
                    
-            await _shoppingcartContext.Customers.AddAsync(new Customer { IdentityId = userIdentity.Id, Address = model.Address });
+            await _shoppingcartContext.Users.AddAsync(new User { IdentityId = userIdentity.Id, Address = model.Address });
             await _shoppingcartContext.SaveChangesAsync();
 
             return new OkResult();

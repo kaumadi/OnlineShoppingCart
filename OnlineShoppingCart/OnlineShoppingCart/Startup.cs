@@ -1,5 +1,6 @@
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -7,14 +8,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using OnlineShoppingCart.BusinessLayer.Helpers;
 using OnlineShoppingCart.BusinessLayer.IRepositories;
 using OnlineShoppingCart.BusinessLayer.Repositories;
 using OnlineShoppingCart.BusinessLayer.Services;
 using OnlineShoppingCart.DataAccessLayer.Contexts;
-using OnlineShoppingCart.DataAccessLayer.Mappings;
 using OnlineShoppingCart.DataAccessLayer.Models;
 using OnlineShoppingCart.DataAccessLayer.Validations;
 using System;
+using System.Text;
 
 namespace OnlineShoppingCart
 {
@@ -35,6 +38,42 @@ namespace OnlineShoppingCart
             services.AddScoped<IAccountRepository, AccountService>();
 
 
+            services.AddControllers();
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            });
+
+
+            // configure strongly typed settings objects
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+            // configure jwt authentication
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+            // configure DI for application services
+            services.AddScoped<IUserService, UserService>();
+
+
+
             //services.AddSingleton(mapper);
             // services.AddScoped<IAccountRepository<RegistrationViewModel>, AccountService>();
             services.AddIdentity<AppUser, IdentityRole>
@@ -52,23 +91,12 @@ namespace OnlineShoppingCart
                .AddDefaultTokenProviders();
 
 
-            
-
-
-            services.AddControllers();
-            services.AddCors(c =>
-            {
-                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-            });
             // services.AddAutoMapper(typeof(Startup));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddMvc()
-  .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegistrationViewModelValidator>());
-            //services.AddCors(o => o.AddPolicy("CorePolicy", builder =>
-            //{
-            //    builder.AllowAnyMethod();
-            //}));
+           .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegistrationViewModelValidator>());
+
             
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,35 +108,16 @@ namespace OnlineShoppingCart
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
-            app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();    
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-            //app.UseCors("CorePolicy");
-
+         
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
         }
-        //// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        //public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        //{
-        //    if (env.IsDevelopment())
-        //    {
-        //        app.UseDeveloperExceptionPage();
-        //    }
-
-        //    app.UseRouting();
-
-        //    app.UseEndpoints(endpoints =>
-        //    {
-        //        endpoints.MapGet("/", async context =>
-        //        {
-        //            await context.Response.WriteAsync("Hello World!");
-        //        });
-        //    });
-        //}
+     
     }
 }
