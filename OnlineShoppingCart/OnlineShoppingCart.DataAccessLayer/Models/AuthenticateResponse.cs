@@ -13,6 +13,7 @@ namespace OnlineShoppingCart.DataAccessLayer.Models
         public string Email { get; set; }
         public string Contact { get; set; }
         public string Username { get; set; }
+        public string Password { get; set; }
         public string Token { get; set; }
 
 
@@ -25,6 +26,7 @@ namespace OnlineShoppingCart.DataAccessLayer.Models
             Email = customer.Email;
             Contact = customer.Contact;
             Username = customer.UserName;
+            Password = customer.Password;
             Token = token;
         }
     }

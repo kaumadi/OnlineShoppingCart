@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Server.HttpSys;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -68,6 +69,7 @@ namespace OnlineShoppingCart
                     ValidateAudience = false
                 };
             });
+            //services.AddAuthentication(HttpSysDefaults.AuthenticationScheme);
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();

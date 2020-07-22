@@ -27,8 +27,8 @@ export class UserRegistrationService {
       this.myApiUrl = 'api/Accounts/';
   
   }
-  RegisterCustomer(employee:RegistrationViewModel) : Observable<any>{  
-    return this.http.post<any>(this.myAppUrl  + this.myApiUrl, employee)  
+  RegisterCustomer(regitrationViewModel:RegistrationViewModel) : Observable<any>{  
+    return this.http.post<any>(this.myAppUrl  + this.myApiUrl, regitrationViewModel)  
       .pipe(
         map((response: Response) => 
         response.json()));

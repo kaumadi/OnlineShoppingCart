@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductviewService } from '../shared/services/productview.service';
+import { UserRegistrationService } from '../shared/services/user-registration.service';
 
 @Component({
   selector: 'app-header',
@@ -7,13 +8,11 @@ import { ProductviewService } from '../shared/services/productview.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  public cartProductCount;
 
-
-  constructor(private productviewService: ProductviewService) {}
+  constructor(private userService:UserRegistrationService) {}
 
   ngOnInit(){
-   this.cartProductCount=this.productviewService.getcount();
+
   }
 
 }

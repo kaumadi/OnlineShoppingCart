@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using OnlineShoppingCart.DataAccessLayer.Models;
+using System.Collections.Generic;
 
 namespace OnlineShoppingCart.DataAccessLayer.Contexts
 {
@@ -21,6 +22,7 @@ namespace OnlineShoppingCart.DataAccessLayer.Contexts
             public DbSet<Payment> Payments { get; set; }
             public DbSet<Payment> ProductImage { get; set; }
 
+      
     }
     
 }

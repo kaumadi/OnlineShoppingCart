@@ -1,6 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using OnlineShoppingCart.BusinessLayer.Helpers;
 using OnlineShoppingCart.BusinessLayer.IRepositories;
+using OnlineShoppingCart.DataAccessLayer.Contexts;
 using OnlineShoppingCart.DataAccessLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -13,17 +14,23 @@ namespace OnlineShoppingCart.BusinessLayer.Services
 {
     public class UserService : IUserService
     {
-       // const string secret= "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING";
-
+        const string secret= "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING";
+        readonly OnlineShoppingCartContext _shoppingcartContext;
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
         private List<Customer> _customers = new List<Customer>
-        { 
-          
+        {
+
             new Customer { CustomerId = 1, FirstName = "Test", LastName = "User",Address="Test", UserName = "test",Email="Test",Contact="Test",Password = "test" }
         };
 
-
-        private readonly AppSettings _appSettings;
+        public UserService(OnlineShoppingCartContext context)
+        {
+            _shoppingcartContext = context ?? throw new ArgumentNullException(nameof(context));
+        }
+   
+        
+        //_customers=(from Customer in  _shoppingcartContext.Customer select *).ToList();
+       // private readonly AppSettings _appSettings;
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
             var customer = _customers.SingleOrDefault(x => x.UserName == model.Username && x.Password == model.Password);
@@ -47,8 +54,8 @@ namespace OnlineShoppingCart.BusinessLayer.Services
         {
             // generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();
-            //  var key = Encoding.ASCII.GetBytes(secret);
-              var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+              var key = Encoding.ASCII.GetBytes(secret);
+             //var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

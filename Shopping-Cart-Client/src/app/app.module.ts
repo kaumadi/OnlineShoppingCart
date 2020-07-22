@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,33 +13,10 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { Globals } from './shared/globals';
 import { CustomerRegistrationComponent } from './customer-registration/customer-registration.component';
-
-// Override JSON.parse for debug purposes
-(function () {
-  var parse = JSON.parse;
-
-  JSON.parse = function (str) {
-      try {
-          return parse.apply(this, arguments);
-      } catch (e) {
-          console.log('Error parsing', arguments);
-          throw e;
-      }
-  }
-}());
-
-
-// Override XMLHttpRequest.open
-(function() {
-  var origOpen = XMLHttpRequest.prototype.open;
-  XMLHttpRequest.prototype.open = function() {
-      this.addEventListener('load', function() {
-          console.log('Http Response', this.responseText, this);
-      });
-      origOpen.apply(this, arguments);
-  };
-})();
-
+import { JwtInterceptor } from './shared/helpers/jwt.interceptor';
+import { ErrorInterceptor } from './shared/helpers/error.interceptor';
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +26,8 @@ import { CustomerRegistrationComponent } from './customer-registration/customer-
     FooterComponent,
     HeaderComponent,
     CustomerRegistrationComponent,
+    LoginComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +37,9 @@ import { CustomerRegistrationComponent } from './customer-registration/customer-
     BrowserAnimationsModule,
     FormsModule
   ],
-  providers: [ProductviewService,Globals],
+  providers: [ProductviewService,Globals,        
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

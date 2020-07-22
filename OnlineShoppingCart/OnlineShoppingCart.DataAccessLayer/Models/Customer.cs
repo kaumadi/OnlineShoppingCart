@@ -17,5 +17,6 @@ namespace OnlineShoppingCart.DataAccessLayer.Models
         [JsonIgnore]
         public string Password { get; set; }
         public ICollection<Order> Orders { get; set; }
+        public List<Customer> CustomerList { get; set; }
     }
 }
