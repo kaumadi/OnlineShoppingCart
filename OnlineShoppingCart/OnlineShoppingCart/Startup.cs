@@ -16,7 +16,6 @@ using OnlineShoppingCart.BusinessLayer.Repositories;
 using OnlineShoppingCart.BusinessLayer.Services;
 using OnlineShoppingCart.DataAccessLayer.Contexts;
 using OnlineShoppingCart.DataAccessLayer.Models;
-using OnlineShoppingCart.DataAccessLayer.Validations;
 using System;
 using System.Text;
 
@@ -36,7 +35,7 @@ namespace OnlineShoppingCart
         {
             services.AddDbContext<OnlineShoppingCartContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OnlineShoppingCartContext"), b => b.MigrationsAssembly("OnlineShoppingCart")));
             services.AddScoped<IProductRepository, ProductService>();
-            services.AddScoped<IAccountRepository, AccountService>();
+            services.AddScoped<IOrderService, OrderServices>();
 
 
             services.AddControllers();
@@ -78,26 +77,26 @@ namespace OnlineShoppingCart
 
             //services.AddSingleton(mapper);
             // services.AddScoped<IAccountRepository<RegistrationViewModel>, AccountService>();
-            services.AddIdentity<AppUser, IdentityRole>
-               (opt =>
-               {
-                           // configure identity options
-                   opt.Password.RequireDigit = false;
-                   opt.Password.RequireLowercase = false;
-                   opt.Password.RequireUppercase = false;
-                   opt.Password.RequireNonAlphanumeric = false;
-                   opt.Password.RequiredLength = 6;
-                 //  opt.User.RequireUniqueEmail = true;
-               })
-               .AddEntityFrameworkStores<OnlineShoppingCartContext>()
-               .AddDefaultTokenProviders();
+            //services.AddIdentity<AppUser, IdentityRole>
+            //   (opt =>
+            //   {
+            //               // configure identity options
+            //       opt.Password.RequireDigit = false;
+            //       opt.Password.RequireLowercase = false;
+            //       opt.Password.RequireUppercase = false;
+            //       opt.Password.RequireNonAlphanumeric = false;
+            //       opt.Password.RequiredLength = 6;
+            //     //  opt.User.RequireUniqueEmail = true;
+            //   })
+            //   .AddEntityFrameworkStores<OnlineShoppingCartContext>()
+            //   .AddDefaultTokenProviders();
 
 
             // services.AddAutoMapper(typeof(Startup));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddMvc()
-           .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegistrationViewModelValidator>());
+            services.AddMvc();
+          
 
             
         }

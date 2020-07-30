@@ -14,9 +14,11 @@ namespace OnlineShoppingCart.DataAccessLayer.Models
         public string Email { get; set; }
         public string Contact { get; set; }
         public string UserName { get; set; }
-        [JsonIgnore]
-        public string Password { get; set; }
+        //[JsonIgnore]
+        //public string Password { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
         public ICollection<Order> Orders { get; set; }
-        public List<Customer> CustomerList { get; set; }
+
     }
 }

@@ -15,6 +15,9 @@ export class ProductviewService {
   items = [];
   public cartcount:number;
   formData: Product;
+  public count:number;
+  public productName:string
+
 
   myAppUrl: string;
   myApiUrl: string;
@@ -37,11 +40,53 @@ export class ProductviewService {
     );
   }
 
-  addToCart(product) {
-    this.items.push(product);
-    this.items.length;
-  }
+ //addToCart(product) {
+  //  const existing = this.items.find(({name}) => product.ProductName === name);
+  //     if (existing) {
+  //       existing.num +=1;
+  //       return;
+  //     }
+  //    this.items.push({...product, num: 1});
+  // const productExistInCart = this.items.find(({id}) => id === product.productId); // find product by name
+ // if (productExistInCart) {
+    
+  //   this.items.push({...product, count:1+1}); // enhance "porduct" opject with "num" property
+ 
+  //  return;
+ // }
+  //productExistInCart.count += 1;
+ //  this.items.push(product);
+ //}
+ cartTotal = 0
 
+  addToCart(product) {
+
+    let productExists = false
+
+    for (let i in this.items) {
+      if (this.items[i].productId === product.productId) {
+        this.items[i].qty++
+        productExists = true
+        break;
+      }
+    }
+
+    if (!productExists) {
+      this.items.push({
+        productId: product.productId,
+        productName: product.productName,
+        qty: 1,
+        unitPrice: product.unitPrice 
+  
+        
+      })
+    }
+
+    this.cartTotal = 0
+    this.items.forEach(item => {
+      this.cartTotal += (item.qty * item.unitPrice)
+    })
+  }
   getItems(){
     return this.items;
   }
@@ -52,8 +97,8 @@ export class ProductviewService {
   }
 
   // Calculate total price on item added to the cart
-  getTotalPrice() {
-    let total = 0;
+ getTotalPrice() {
+   let total = 0;
 
     this.items.map(item => {
       total += item.unitPrice;

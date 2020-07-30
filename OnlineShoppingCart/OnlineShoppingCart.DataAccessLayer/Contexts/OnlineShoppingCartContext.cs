@@ -6,14 +6,14 @@ using System.Collections.Generic;
 namespace OnlineShoppingCart.DataAccessLayer.Contexts
 {
   
-        public class OnlineShoppingCartContext : IdentityDbContext<AppUser>
+        public class OnlineShoppingCartContext : DbContext
     {
             public OnlineShoppingCartContext(DbContextOptions options)
                   : base(options)
             {
             }
 
-            public DbSet<User> Users { get; set; }
+         
             public DbSet<Customer> Customers { get; set; }
             public DbSet<Category> Categories { get; set; }
             public DbSet<Product> Products { get; set; }

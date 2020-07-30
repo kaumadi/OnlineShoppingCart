@@ -1,39 +1,116 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using OnlineShoppingCart.BusinessLayer.Helpers;
 using OnlineShoppingCart.BusinessLayer.IRepositories;
 using OnlineShoppingCart.DataAccessLayer.Models;
-
+using OnlineShoppingCart.DataAccessLayer.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace OnlineShoppingCart.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("[Controller]")]
     public class UserController : ControllerBase
     {
         private IUserService _userService;
-
-        public UserController(IUserService userService)
+        private IMapper _mapper;
+        const string secret = "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING";
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
         }
+        //[AllowAnonymous]
+        //[HttpPost("authenticate")]
+        //public IActionResult Authenticate([FromBody]AuthenticateRequest model)
+        //{
+        //    var response = _userService.Authenticate(model);
+
+        //    if (response == null)
+        //        return BadRequest(new { message = "Username or Password is incorrect" });
+
+        //    return Ok(response);
+        //}
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]AuthenticateRequest model)
+        public IActionResult Authenticate([FromBody]AuthenticationViewModel model)
         {
-            var response = _userService.Authenticate(model);
+            var customer = _userService.Authenticate(model.Username, model.Password);
 
-            if (response == null)
-                return BadRequest(new { message = "Username or Password is incorrect" });
+            if (customer == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
 
-            return Ok(response);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, customer.CustomerId.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenString = tokenHandler.WriteToken(token);
+
+            // return basic user info and authentication token
+            return Ok(new
+            {
+            CustomerId = customer.CustomerId,
+            FirstName = customer.FirstName,
+            LastName = customer.LastName,
+            Address = customer.Address,
+            Email = customer.Email,
+            Contact = customer.Contact,
+            Username = customer.UserName,
+            Token = tokenString
+            });
+        }
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public IActionResult Register([FromBody]RegisterViewModel model)
+        {
+            // map model to entity
+            var customer = _mapper.Map<Customer>(model);
+
+            try
+            {
+                // create user
+                _userService.Create(customer, model.Password);
+                return Ok();
+            }
+            catch (AppException ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var customers = _userService.GetAll();
-            return Ok(customers);
+            var users = await  _userService.GetAll();
+            var model = _mapper.Map<IList<CustomerViewModel>>(users);
+            return Ok(users);
+
+        }
+
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var user = _userService.GetById(id);
+            var model = _mapper.Map<CustomerViewModel>(user);
+            return Ok(model);
         }
     }
 }

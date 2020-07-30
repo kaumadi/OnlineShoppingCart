@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
 import { ProductviewService } from '../shared/services/productview.service';
+import { Product } from '../shared/models/product';
 
 
 @Component({
@@ -10,8 +11,10 @@ import { ProductviewService } from '../shared/services/productview.service';
 export class ProductCartComponent implements OnInit {
   items;
   public totalAmmount;
-
+  public productCount;
+  public count:number;
   constructor(private productviewService: ProductviewService) { }
+  cartTotal = 0
 
   ngOnInit() {
     this.items = this.productviewService.getItems();
@@ -21,7 +24,7 @@ export class ProductCartComponent implements OnInit {
     console.log( this.productviewService.getcount());
     
   }
-
+ 
   getTotalAmount(){
     this.totalAmmount = this.productviewService.getTotalPrice();
   }
@@ -34,6 +37,10 @@ export class ProductCartComponent implements OnInit {
   removeItemFromCart(productId) {
     this.productviewService.removeProductFromCart(productId);
     this.getTotalAmount();
+
+  }
+  
+  checkout(){
 
   }
 }

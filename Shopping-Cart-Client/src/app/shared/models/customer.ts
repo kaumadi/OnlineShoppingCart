@@ -6,6 +6,6 @@ export class Customer{
     Email :string 
     Contact:string
     UserName :string
-    Password :string
+    Password:string
     token?: string;
 }

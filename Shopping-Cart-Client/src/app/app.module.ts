@@ -17,6 +17,9 @@ import { JwtInterceptor } from './shared/helpers/jwt.interceptor';
 import { ErrorInterceptor } from './shared/helpers/error.interceptor';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { AlertComponent } from './alert/alert.component';
+import { RegisterComponent } from './register/register.component';
+
 
 @NgModule({
   declarations: [
@@ -28,6 +31,9 @@ import { HomeComponent } from './home/home.component';
     CustomerRegistrationComponent,
     LoginComponent,
     HomeComponent,
+    AlertComponent,
+    RegisterComponent,
+    
   ],
   imports: [
     BrowserModule,

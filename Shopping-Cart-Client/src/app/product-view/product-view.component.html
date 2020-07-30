@@ -14,9 +14,10 @@
                 <img src="./assets/productimages/{{product.imagePath}}" alt="">        
                  <div class="pi-links">
                   <a class="add-card" (click)="addToCart(product)"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                 
                   <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
                 </div> 
-              </div>
+              </div>z
               <div class="pi-text">
                 <h6>{{product.productName}}</h6>
                 <h6>LKR {{product.unitPrice}}</h6>
@@ -33,6 +34,10 @@
       </div>
       
     </section>
+   
+      <!-- <div *ngIf="cartItems.length === 0" class="alert alert-info">Your Cart is Empty.</div> -->
+
+     
       <!-- Product List section end -->
   
   

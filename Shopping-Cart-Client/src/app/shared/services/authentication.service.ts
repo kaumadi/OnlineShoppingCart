@@ -5,6 +5,7 @@ import { Customer } from '../models/customer';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/internal/operators/map';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<Customer>;
   public currentUser: Observable<Customer>;
 
-  constructor(private http: HttpClient) {
+  constructor(private router: Router,private http: HttpClient) {
       this.currentUserSubject = new BehaviorSubject<Customer>(JSON.parse(localStorage.getItem('currentUser')));
       this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -36,6 +37,20 @@ export class AuthenticationService {
       // remove user from local storage to log user out
       localStorage.removeItem('currentUser');
       this.currentUserSubject.next(null);
+      this.router.navigate(['/account/login']);
   }
+
+register(user: Customer) {
+    return this.http.post(`${environment.appUrl}user/register`, user);
+}
+
+getAll() {
+    return this.http.get<Customer[]>(`${environment.appUrl}user`);
+}
+
+getById(id: string) {
+    return this.http.get<Customer>(`${environment.appUrl}user/${id}`);
+}
+
 }
 
