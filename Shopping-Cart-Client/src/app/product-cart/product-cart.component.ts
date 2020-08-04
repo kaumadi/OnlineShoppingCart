@@ -1,6 +1,9 @@
 import { Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
 import { ProductviewService } from '../shared/services/productview.service';
 import { Product } from '../shared/models/product';
+import { CheckoutService } from '../shared/services/checkout.service';
+import { first } from 'rxjs/operators';
+import { CheckoutViewModel } from '../shared/view-models/checkoutViewModel';
 
 
 @Component({
@@ -13,8 +16,14 @@ export class ProductCartComponent implements OnInit {
   public totalAmmount;
   public productCount;
   public count:number;
-  constructor(private productviewService: ProductviewService) { }
   cartTotal = 0
+  public data: CheckoutViewModel;
+  @Input() productItem: CheckoutViewModel;
+
+  constructor(private productviewService: ProductviewService,private checoutService:CheckoutService) {
+
+   }
+
 
   ngOnInit() {
     this.items = this.productviewService.getItems();
@@ -40,7 +49,11 @@ export class ProductCartComponent implements OnInit {
 
   }
   
-  checkout(){
-
+  Checkout() {
+    this.checoutService.Checkout(this.items).subscribe(() => {
+      console.log(this.items);
+    })
+  
+    
   }
 }

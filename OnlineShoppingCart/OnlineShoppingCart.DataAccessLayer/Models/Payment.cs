@@ -5,11 +5,9 @@ namespace OnlineShoppingCart.DataAccessLayer.Models
 {
     public class Payment
     {
-        [ForeignKey("OrderID")]
-
         public int PaymentId { get; set; }
         public string PaymentType { get; set; }
-
+        [ForeignKey("OrderID")]
         public Order Orders { get; set; }
     }
 }

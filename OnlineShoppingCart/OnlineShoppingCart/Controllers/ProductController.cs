@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShoppingCart.BusinessLayer.IRepositories;
-using OnlineShoppingCart.DataAccessLayer.Models;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace OnlineShoppingCart.Controllers
@@ -24,8 +22,11 @@ namespace OnlineShoppingCart.Controllers
             }
         #endregion
 
-        #region GetAllProductsAsync 
-        // GET: api/product
+        #region GetAllProductsAsync  
+        /// <summary>
+        /// GET: api/product
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
             public async Task<IActionResult> GetAllProductsAsync()
             {
@@ -35,7 +36,11 @@ namespace OnlineShoppingCart.Controllers
         #endregion
 
         #region GetProductByIdAsync 
-        // GET api/<controller>/1
+        /// <summary>
+        /// GET api/<controller>/1
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}", Name = "GetProductByIdAsync")]
             public async Task<IActionResult> GetProductByIdAsync(long id)
             {

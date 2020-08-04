@@ -1,6 +1,7 @@
 export class CheckoutViewModel{
     productId:number
-    PurchesQuantity:number
     productName:string
+    availableStockQty:number
+    unitPrice:number
     ToatalProductPrice:number 
 }

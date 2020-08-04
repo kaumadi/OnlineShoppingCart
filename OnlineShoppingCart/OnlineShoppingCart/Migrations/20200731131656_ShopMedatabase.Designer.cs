@@ -10,8 +10,8 @@ using OnlineShoppingCart.DataAccessLayer.Contexts;
 namespace OnlineShoppingCart.Migrations
 {
     [DbContext(typeof(OnlineShoppingCartContext))]
-    [Migration("20200727064003_ShopMeDb")]
-    partial class ShopMeDb
+    [Migration("20200731131656_ShopMedatabase")]
+    partial class ShopMedatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -79,7 +79,7 @@ namespace OnlineShoppingCart.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CustomersCustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Discount")
@@ -93,7 +93,7 @@ namespace OnlineShoppingCart.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("CustomersCustomerId");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
                 });
@@ -153,7 +153,7 @@ namespace OnlineShoppingCart.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("OrdersOrderId")
+                    b.Property<int?>("OrderID")
                         .HasColumnType("int");
 
                     b.Property<string>("PaymentType")
@@ -161,7 +161,7 @@ namespace OnlineShoppingCart.Migrations
 
                     b.HasKey("PaymentId");
 
-                    b.HasIndex("OrdersOrderId");
+                    b.HasIndex("OrderID");
 
                     b.ToTable("Payment");
                 });
@@ -202,7 +202,7 @@ namespace OnlineShoppingCart.Migrations
                 {
                     b.HasOne("OnlineShoppingCart.DataAccessLayer.Models.Customer", "Customers")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomersCustomerId");
+                        .HasForeignKey("CustomerId");
                 });
 
             modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.OrderItem", b =>
@@ -227,7 +227,7 @@ namespace OnlineShoppingCart.Migrations
                 {
                     b.HasOne("OnlineShoppingCart.DataAccessLayer.Models.Order", "Orders")
                         .WithMany()
-                        .HasForeignKey("OrdersOrderId");
+                        .HasForeignKey("OrderID");
                 });
 
             modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.Product", b =>

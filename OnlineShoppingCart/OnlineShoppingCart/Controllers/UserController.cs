@@ -20,25 +20,21 @@ namespace OnlineShoppingCart.Controllers
     [Route("[Controller]")]
     public class UserController : ControllerBase
     {
+        #region Private Members
         private IUserService _userService;
         private IMapper _mapper;
         const string secret = "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING";
+        #endregion
+
+        #region Constractor
         public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;
         }
-        //[AllowAnonymous]
-        //[HttpPost("authenticate")]
-        //public IActionResult Authenticate([FromBody]AuthenticateRequest model)
-        //{
-        //    var response = _userService.Authenticate(model);
+        #endregion
 
-        //    if (response == null)
-        //        return BadRequest(new { message = "Username or Password is incorrect" });
-
-        //    return Ok(response);
-        //}
+        #region User Login Authentication
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]AuthenticationViewModel model)
@@ -75,6 +71,9 @@ namespace OnlineShoppingCart.Controllers
             Token = tokenString
             });
         }
+        #endregion
+
+        #region New User Registration
         [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody]RegisterViewModel model)
@@ -94,7 +93,9 @@ namespace OnlineShoppingCart.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+        #endregion
 
+        #region Get All Users
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -103,8 +104,9 @@ namespace OnlineShoppingCart.Controllers
             return Ok(users);
 
         }
+        #endregion
 
-
+        #region Get User By Id
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -112,5 +114,6 @@ namespace OnlineShoppingCart.Controllers
             var model = _mapper.Map<CustomerViewModel>(user);
             return Ok(model);
         }
+        #endregion
     }
 }

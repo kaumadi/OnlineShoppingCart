@@ -19,6 +19,8 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { AlertComponent } from './alert/alert.component';
 import { RegisterComponent } from './register/register.component';
+import { CheckoutService } from './shared/services/checkout.service';
+import { PurchaseComponent } from './purchase/purchase.component';
 
 
 @NgModule({
@@ -33,6 +35,7 @@ import { RegisterComponent } from './register/register.component';
     HomeComponent,
     AlertComponent,
     RegisterComponent,
+    PurchaseComponent,
     
   ],
   imports: [
@@ -43,7 +46,7 @@ import { RegisterComponent } from './register/register.component';
     BrowserAnimationsModule,
     FormsModule
   ],
-  providers: [ProductviewService,Globals,        
+  providers: [ProductviewService,Globals,CheckoutService,        
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
   bootstrap: [AppComponent]

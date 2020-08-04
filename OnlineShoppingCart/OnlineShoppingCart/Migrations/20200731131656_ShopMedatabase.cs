@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OnlineShoppingCart.Migrations
 {
-    public partial class ShopMeDb : Migration
+    public partial class ShopMedatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -73,14 +73,14 @@ namespace OnlineShoppingCart.Migrations
                     TotalAmount = table.Column<decimal>(nullable: false),
                     Discount = table.Column<decimal>(nullable: false),
                     OrderDate = table.Column<DateTime>(nullable: false),
-                    CustomersCustomerId = table.Column<int>(nullable: true)
+                    CustomerId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderId);
                     table.ForeignKey(
-                        name: "FK_Orders_Customers_CustomersCustomerId",
-                        column: x => x.CustomersCustomerId,
+                        name: "FK_Orders_Customers_CustomerId",
+                        column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "CustomerId",
                         onDelete: ReferentialAction.Restrict);
@@ -115,14 +115,14 @@ namespace OnlineShoppingCart.Migrations
                     PaymentId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PaymentType = table.Column<string>(nullable: true),
-                    OrdersOrderId = table.Column<int>(nullable: true)
+                    OrderID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Payment", x => x.PaymentId);
                     table.ForeignKey(
-                        name: "FK_Payment_Orders_OrdersOrderId",
-                        column: x => x.OrdersOrderId,
+                        name: "FK_Payment_Orders_OrderID",
+                        column: x => x.OrderID,
                         principalTable: "Orders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Restrict);
@@ -170,14 +170,14 @@ namespace OnlineShoppingCart.Migrations
                 column: "OrdersOrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomersCustomerId",
+                name: "IX_Orders_CustomerId",
                 table: "Orders",
-                column: "CustomersCustomerId");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payment_OrdersOrderId",
+                name: "IX_Payment_OrderID",
                 table: "Payment",
-                column: "OrdersOrderId");
+                column: "OrderID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoriesCategoryId",

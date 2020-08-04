@@ -16,10 +16,10 @@ export class CheckoutService {
 
   constructor(private http: HttpClient) {
       this.myAppUrl = environment.appUrl;
-      this.myApiUrl = 'api/Accounts/';
+      this.myApiUrl = 'api/order/Checkout';
   
   }
-  RegisterCustomer(checkoutViewModel:CheckoutViewModel) : Observable<any>{  
+  Checkout(checkoutViewModel:CheckoutViewModel) : Observable<any>{  
     return this.http.post<any>(this.myAppUrl  + this.myApiUrl, checkoutViewModel)  
       .pipe(
         map((response: Response) => 

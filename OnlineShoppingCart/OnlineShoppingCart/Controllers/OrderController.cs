@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShoppingCart.BusinessLayer.IRepositories;
-using OnlineShoppingCart.BusinessLayer.Services;
-using OnlineShoppingCart.DataAccessLayer.Models;
 using OnlineShoppingCart.DataAccessLayer.ViewModels;
+using System;
+using System.Collections.Generic;
 
 namespace OnlineShoppingCart.Controllers
 {
-    
+
     [ApiController]
     [Route("api/[controller]")]
     public class OrderController : Controller
@@ -26,41 +22,16 @@ namespace OnlineShoppingCart.Controllers
         }
         #endregion
 
+        #region Checkout ActionResult
 
-        // POST: api/Order
-        [HttpPost("order")]
-        public ActionResult PostOrderDetails([FromBody]Order order)
-        {
-            if (order == null)
-            {
-                return BadRequest();
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }     
-            _orderService?.Add(order);
-            return Ok();         
-        }
+        /// <summary>
+        /// Compaire Availability of stock and Orderd quantity 
+        /// </summary>
+        /// <param name="List<CheckoutViewModel>"></param>
+        /// <returns></returns>
 
-        // POST: api/Order
-        [HttpPost("orderitems")]
-        public ActionResult PostOrderItemDetails([FromBody]OrderItem orderItem)
-        {
-            if (orderItem == null)
-            {
-                return BadRequest();
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            _orderService?.AddOrderItems(orderItem);
-            return Ok();
-        }
-
-        [HttpPost("checkout")]
-        public async Task<ActionResult> PostOrderItem([FromBody]CheckoutViewModel[]  checkoutViewModel)
+        [HttpPost("Checkout")]
+        public ActionResult Checkout([FromBody]List<CheckoutViewModel> checkoutViewModel)
         {
             if (checkoutViewModel == null)
             {
@@ -70,9 +41,33 @@ namespace OnlineShoppingCart.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var results = await  _orderService?.GetProducts(checkoutViewModel);
-            return Ok(results);
-         
+            var results = _orderService?.Checkout(checkoutViewModel);
+            return Ok(results);        
         }
+        #endregion Checkout ActionResult
+
+        #region PurchaseItem ActionResult
+        
+        /// <summary>
+        /// POST : api/Order
+        /// </summary>
+        /// <param name="purchaseViewModel"></param>
+        /// <returns></returns>
+        [HttpPost("Purchase")]
+        public ActionResult PurchaseItem([FromBody]PurchaseViewModel purchaseViewModel)
+        {
+            if (purchaseViewModel == null)
+            {
+                return BadRequest();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _orderService?.AddPurchase(purchaseViewModel);
+            return Ok();
+        }
+
+        #endregion PurchaseItem ActionResult
     }
 }

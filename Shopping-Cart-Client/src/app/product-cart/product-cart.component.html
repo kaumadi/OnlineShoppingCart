@@ -35,13 +35,13 @@
 										<div>
 					                        <div>
 										
-												<h6>{{ item.qty}}</h6>
+												<h6>{{ item.availableStockQty}}</h6>
 												
 											</div>
                     					</div>
 									</td>
 									<td>
-										<strong>{{ (item.qty * item.unitPrice) | currency:'LKR' }}</strong>
+										<strong>{{ (item.availableStockQty * item.unitPrice) | currency:'LKR' }}</strong>
 									</td>
 									<td >
 										<div >
@@ -63,7 +63,7 @@
 				</div>
 				<div class="col-lg-4 card-right">
 					<a class="site-btn sb-yellow" (click)="emptyCart()"> Clear Cart</a>
-					<a class="site-btn"(click)="checkout()">Proceed to checkout</a>
+					<a class="site-btn"(click)="Checkout()">Proceed to checkout</a>
 					<a routerLink=" " class="site-btn sb-dark">Continue shopping</a>
 				</div>
 			</div>

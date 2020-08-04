@@ -4,9 +4,9 @@ using System.Text;
 
 namespace OnlineShoppingCart.DataAccessLayer.ViewModels
 {
-    public class CheckoutProductList
+    public class ProductStockStatus
     {
-        public List<CheckoutViewModel> checkoutViewModels { get; set; }
-
+        public int ProductID { get; set; }
+        public bool ProductCurrentStatus { get; set; }
     }
 }

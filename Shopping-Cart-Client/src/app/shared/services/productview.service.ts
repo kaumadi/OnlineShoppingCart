@@ -75,7 +75,7 @@ export class ProductviewService {
       this.items.push({
         productId: product.productId,
         productName: product.productName,
-        qty: 1,
+        availableStockQty: 1,
         unitPrice: product.unitPrice 
   
         
