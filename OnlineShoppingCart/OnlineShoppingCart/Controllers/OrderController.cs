@@ -3,6 +3,7 @@ using OnlineShoppingCart.BusinessLayer.IRepositories;
 using OnlineShoppingCart.DataAccessLayer.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OnlineShoppingCart.Controllers
 {
@@ -31,7 +32,7 @@ namespace OnlineShoppingCart.Controllers
         /// <returns></returns>
 
         [HttpPost("Checkout")]
-        public ActionResult Checkout([FromBody]List<CheckoutViewModel> checkoutViewModel)
+        public ActionResult Checkout([FromBody]CheckoutViewModel checkoutViewModel)
         {
             if (checkoutViewModel == null)
             {
@@ -46,8 +47,9 @@ namespace OnlineShoppingCart.Controllers
         }
         #endregion Checkout ActionResult
 
+
         #region PurchaseItem ActionResult
-        
+
         /// <summary>
         /// POST : api/Order
         /// </summary>

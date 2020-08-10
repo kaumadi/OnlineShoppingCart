@@ -5,7 +5,7 @@ namespace OnlineShoppingCart.BusinessLayer.IRepositories
 {
     public interface IOrderService
     {
-        List<ProductStockStatus> Checkout(List<CheckoutViewModel> checkoutViewModel);
+        List<ProductStockStatus> Checkout(CheckoutViewModel checkoutViewModel);
         void AddPurchase (PurchaseViewModel purchaseViewModel);
     }
 }

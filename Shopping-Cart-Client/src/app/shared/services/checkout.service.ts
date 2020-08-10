@@ -2,15 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CheckoutViewModel } from '../view-models/checkoutViewModel';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, pipe } from 'rxjs';
+import { Customer } from '../models/customer';
 import { map } from 'rxjs/internal/operators/map';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CheckoutService {
 
-
+  items = [];
   myAppUrl: string;
   myApiUrl: string;
 
@@ -19,13 +21,19 @@ export class CheckoutService {
       this.myApiUrl = 'api/order/Checkout';
   
   }
-  Checkout(checkoutViewModel:CheckoutViewModel) : Observable<any>{  
+  Checkout(checkoutViewModel:CheckoutViewModel) : Observable<any>{ 
+    console.log(checkoutViewModel); 
     return this.http.post<any>(this.myAppUrl  + this.myApiUrl, checkoutViewModel)  
-      .pipe(
-        map((response: Response) => 
-        response.json()));
+   .pipe(
+    map(res => res));
     } 
-
+    
+    removeProductFromCart(productId) {
+      var item=this.items.indexOf(productId);
+      this.items.splice(item);
+  
+  
+    }
   errorHandler(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

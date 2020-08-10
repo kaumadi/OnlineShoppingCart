@@ -2,6 +2,11 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { ProductviewService } from '../shared/services/productview.service';
 import { Product } from '../shared/models/product';
+import { Customer } from '../shared/models/customer';
+import { AuthenticationService } from '../shared/services/authentication.service';
+import { CustomerService } from '../shared/services/customer.service';
+import { first } from 'rxjs/internal/operators/first';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 
 @Component({
@@ -15,18 +20,27 @@ export class ProductViewComponent implements OnInit {
   totalcartvalue = 0;
   conditionToDisaply=false;
   public cartitemcount:number;
+  
+
+
+  currentUser: Customer;
+  currentUserSubscription: Subscription;
+  users: Customer[] = [];
+  //customers=[];
+ 
+  constructor(private productviewService: ProductviewService,
+    private customerService:CustomerService) {
+      
 
  
-  constructor(private productviewService: ProductviewService) {
-   
   }
 
   ngOnInit() {
     this.loadProducts();
     this.cartitemcount=this.productviewService.getItems().length;
-   
+   this.loadAllUsers();
+  
   }
-
   
   loadProducts() {
     this.products$ = this.productviewService.getAllAsync();
@@ -37,9 +51,15 @@ export class ProductViewComponent implements OnInit {
 
     window.alert('Your product has been added to the cart!');
     this.cartitemcount=this.productviewService.getItems().length;
-
     console.log( this.cartitemcount);
   }
 
- 
+  private loadAllUsers() {
+    this.customerService.getAllCustomers().pipe(first()).subscribe(users => {
+        this.users = users;      
+    });
 }
+  
+  }
+ 
+

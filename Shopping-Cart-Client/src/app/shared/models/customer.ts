@@ -1,11 +1,11 @@
 export class Customer{
-    CustomerId :number
-    FirstName :string
-    LastName :string
-    Address : string
-    Email :string 
-    Contact:string
-    UserName :string
-    Password:string
+    customerId :number
+    firstName :string
+    lastName :string
+    address : string
+    email :string 
+    contact:string
+    userName :string
+    password:string
     token?: string;
 }

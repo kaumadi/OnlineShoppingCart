@@ -4,6 +4,12 @@ import { Product } from '../shared/models/product';
 import { CheckoutService } from '../shared/services/checkout.service';
 import { first } from 'rxjs/operators';
 import { CheckoutViewModel } from '../shared/view-models/checkoutViewModel';
+import { Customer } from '../shared/models/customer';
+import { Subscription } from 'rxjs';
+import { AuthenticationService } from '../shared/services/authentication.service';
+import { FormGroup } from '@angular/forms';
+import { ProductStockStatus } from '../shared/view-models/productStockStatus';
+import { SelectedListViewModel } from '../shared/view-models/SelectedListViewModel';
 
 
 @Component({
@@ -12,17 +18,30 @@ import { CheckoutViewModel } from '../shared/view-models/checkoutViewModel';
   styleUrls: ['./product-cart.component.css']
 })
 export class ProductCartComponent implements OnInit {
+
   items;
   public totalAmmount;
   public productCount;
   public count:number;
-  cartTotal = 0
-  public data: CheckoutViewModel;
-  @Input() productItem: CheckoutViewModel;
 
-  constructor(private productviewService: ProductviewService,private checoutService:CheckoutService) {
+  public cartTotal: number = 0;
+ 
+  checkoutViewModel: CheckoutViewModel;
+  currentUser: Customer;
+  currentUserSubscription: Subscription;
+  customer:Customer
+  productName:string
+  productStockStatus: ProductStockStatus;
 
-   }
+  constructor(private productviewService: ProductviewService,
+    private checoutService:CheckoutService,
+    private authenticationService: AuthenticationService) {
+      this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+      this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
+        this.currentUser = user;
+        
+      });
+    }
 
 
   ngOnInit() {
@@ -31,11 +50,11 @@ export class ProductCartComponent implements OnInit {
     this.getTotalAmount();
     this.productviewService.getcount();
     console.log( this.productviewService.getcount());
-    
+    this.checkoutViewModel = new CheckoutViewModel();
   }
  
   getTotalAmount(){
-    this.totalAmmount = this.productviewService.getTotalPrice();
+    this.cartTotal += this.items.unitPrice * this.items.orderdQty;
   }
 
   emptyCart() {
@@ -44,16 +63,32 @@ export class ProductCartComponent implements OnInit {
   }
 
   removeItemFromCart(productId) {
-    this.productviewService.removeProductFromCart(productId);
-    this.getTotalAmount();
+   
+   var item=this.items.indexOf(productId);
+   this.items.splice(item);
 
   }
   
+
   Checkout() {
-    this.checoutService.Checkout(this.items).subscribe(() => {
-      console.log(this.items);
-    })
   
-    
+//  this.checkoutViewModel.productId=1;
+//  this.checkoutViewModel.productName="test";
+//  this.checkoutViewModel.availableStockQty=1;
+//  this.checkoutViewModel.unitPrice=100;
+//this.items.push(this.currentUser)
+this.checkoutViewModel.customerId=this.currentUser.customerId
+this.checkoutViewModel.userName=this.currentUser.userName
+this.checkoutViewModel.token=this.currentUser.token
+//this.examinationSemesters.push(this.examinationSemester);
+this.checkoutViewModel.selectedListViewModel=this.items
+//this.checkoutViewModel.customerId=this.currentUser.customerId;
+   this.checoutService.Checkout(this.checkoutViewModel)
+   .subscribe((data)=>{
+     this.productStockStatus=data
+     this.items= this.productStockStatus
+    console.log(this.productStockStatus);
+    })   
   }
+
 }

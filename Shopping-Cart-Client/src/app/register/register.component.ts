@@ -4,6 +4,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { AlertService } from '../shared/services/alert.service';
+import { CustomerService } from '../shared/services/customer.service';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +21,7 @@ export class RegisterComponent implements OnInit {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private accountService: AuthenticationService,
+        private customerService: CustomerService,
         private alertService: AlertService
     ) { }
 
@@ -51,7 +52,7 @@ export class RegisterComponent implements OnInit {
         }
 
         this.loading = true;
-        this.accountService.register(this.form.value)
+        this.customerService.register(this.form.value)
             .pipe(first())
             .subscribe(
                 data => {

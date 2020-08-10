@@ -1,13 +1,9 @@
-<p>home works!</p>
-<div class="card mt-4">
-    <h4 class="card-header">You're logged in with Angular 9 & JWT!!</h4>
-    <!-- <div class="card-body">
-        <h6>Users from secure api end point</h6>
-        <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
-         <ul *ngIf="users">
-            <li *ngFor="let user of users">{{user.firstName}} {{user.lastName}}</li>
-        </ul> 
-    </div> -->
-    
-</div>
-<a  (click)="logout()">Logout</a>
+<h1>Hi {{currentUser.firstName}}!</h1>
+<p>You're logged in with Angular 8!!</p>
+<h3>All registered users:</h3>
+<ul>
+    <li *ngFor="let user of users">
+        {{user.username}} ({{user.firstName}} {{user.lastName}})
+        - <a class="text-danger">Delete</a>
+    </li>
+</ul>

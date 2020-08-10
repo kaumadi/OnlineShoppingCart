@@ -3,46 +3,45 @@
   <div class="header-top">
   </div>
   <div class="header-top">
-    <div class="container">   
-    <div class="raw">
+    <div class="container">
+      <div class="raw">
         <div class="col-lg-2 text-center text-lg-left">
-             <h2>Shop Me</h2>
-      </div>  
+          <h2>Shop Me</h2>
+        </div>
         <div class="col-6 col-md-4">
-          <div class="user-panel"> 
+          <div class="user-panel">
             <div class="up-item">
               <i class="flaticon-profile"></i>
-              <a routerLink="/login">SignIn</a> 
-              </div>
+              <a routerLink="/login">SignIn</a>
+            </div>
             <div class="shopping-card">
               <div class="up-item">
-              <i class="flaticon-bag"></i>   
-              <a  routerLink="/productCart">Shopping Cart</a>   
-            </div>                   
+                <i class="flaticon-bag"></i>
+                <a routerLink="/productCart">Shopping Cart</a>
+              </div>
             </div>
+
+            
+            <div>    <h6>Hi {{currentUser.firstName}} {{currentUser.lastName}}!</h6>
+              <p>You're logged in with Shop Me!!</p>
+             </div>
           </div>
-          </div>
-           </div>
-           
-  </div>
+        </div>
+      </div>
     </div>
+  </div>
   <nav class="main-navbar">
     <div class="container">
       <!-- menu -->
       <ul class="main-menu">
         <li><a routerLink="">Home</a></li>
-        <li><a routerLink="/productCart">Cart</a></li> 
-        <li><a href="./checkout.html">Checkout</a></li>
+        <li><a routerLink="/productCart">Cart</a></li>
         <li><a href="./contact.html">Contact
-          <span class="badge badge-pill badge-success">Call Me</span></a></li>
-          <li><a  (click)="logout()">Logout</a></li>
+            <span class="badge badge-pill badge-success">Call Me</span></a></li>
+        <li><a (click)="logout()">Logout</a></li>
       </ul>
     </div>
   </nav>
-  </header>
+</header>
 <section class="hero-section">
-  
 </section>
-
-  
-

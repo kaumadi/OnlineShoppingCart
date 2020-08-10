@@ -10,7 +10,11 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
-  getAllCustomers() {
+getAllCustomers() {
     return this.http.get<Customer[]>(`${environment.appUrl}user`);
+}
+
+register(user: Customer) {
+  return this.http.post(`${environment.appUrl}user/register`, user);
 }
 }

@@ -12,7 +12,6 @@ import { ProductCartComponent } from './product-cart/product-cart.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { Globals } from './shared/globals';
-import { CustomerRegistrationComponent } from './customer-registration/customer-registration.component';
 import { JwtInterceptor } from './shared/helpers/jwt.interceptor';
 import { ErrorInterceptor } from './shared/helpers/error.interceptor';
 import { LoginComponent } from './login/login.component';
@@ -20,7 +19,7 @@ import { HomeComponent } from './home/home.component';
 import { AlertComponent } from './alert/alert.component';
 import { RegisterComponent } from './register/register.component';
 import { CheckoutService } from './shared/services/checkout.service';
-import { PurchaseComponent } from './purchase/purchase.component';
+import { PaymentComponent } from './payment/payment.component';
 
 
 @NgModule({
@@ -30,12 +29,11 @@ import { PurchaseComponent } from './purchase/purchase.component';
     ProductCartComponent,
     FooterComponent,
     HeaderComponent,
-    CustomerRegistrationComponent,
     LoginComponent,
     HomeComponent,
     AlertComponent,
     RegisterComponent,
-    PurchaseComponent,
+    PaymentComponent,
     
   ],
   imports: [

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace OnlineShoppingCart.BusinessLayer.Services
 {
@@ -20,27 +21,31 @@ namespace OnlineShoppingCart.BusinessLayer.Services
         }
 
 
-        public List<ProductStockStatus> Checkout(List<CheckoutViewModel> checkoutViewModel)
+        public List<ProductStockStatus> Checkout(CheckoutViewModel checkoutViewModel)
         {
             var products = _shoppingcartContext.Products.ToList().AsQueryable();
-
+            
             List<ProductStockStatus> FinalOut = new List<ProductStockStatus>();
-            foreach (var checkout in checkoutViewModel)
+            foreach (var checkout in checkoutViewModel.selectedListViewModel)
             {
                 ProductStockStatus oneStatus = new ProductStockStatus
                 { 
-                    ProductID = checkout.ProductId,
-                    ProductCurrentStatus = _shoppingcartContext.Products.Where(i => i.UnitsInStock >= checkout.AvailableStockQty && i.ProductId == checkout.ProductId).Any()
+                    ProductId = checkout.ProductId,
+                    OrderdQty = checkout.OrderdQty,
+                    ProductName = checkout.ProductName,
+                    UnitPrice = checkout.UnitPrice,
+                    ProductCurrentStatus = _shoppingcartContext.Products.Where(i => i.UnitsInStock >= checkout.OrderdQty && i.ProductId == checkout.ProductId).Any()
                 };
 
                 FinalOut.Add(oneStatus);
             }
                // products = _shoppingcartContext.Products.Where(i => i.UnitsInStock > checkoutViewModel.availableQty && i.ProductId== checkoutViewModel.productid);
 
-            return FinalOut;
+            return FinalOut.ToList();
           // return await _shoppingcartContext.Products.ToListAsync(); 
         }
 
+     
 
         public void AddPurchase(PurchaseViewModel purchaseViewModel)
         {

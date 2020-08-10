@@ -1,7 +1,8 @@
+import { SelectedListViewModel } from './SelectedListViewModel';
+
 export class CheckoutViewModel{
-    productId:number
-    productName:string
-    availableStockQty:number
-    unitPrice:number
-    ToatalProductPrice:number 
+    customerId:number
+    userName:string
+    token?: string;
+    selectedListViewModel:SelectedListViewModel[]
 }

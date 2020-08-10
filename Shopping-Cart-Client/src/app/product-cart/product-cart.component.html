@@ -2,6 +2,7 @@
 		<div class="container">
 			<div class="row" >
 				<div class="col-lg-8">
+					
 					<div class="cart-table">
 						<h3>Your Cart</h3>
 						<div class="cart-table-warp">
@@ -9,9 +10,9 @@
 							<thead>
 								<tr>
 									<th><h6>Product Name</h6></th>		
-									<th><h6>Price LKR</h6></th>
-									<th><h6>Action</h6></th> 
-								    <th><h6>Quantity</h6></th>  
+									<th><h6>Unit Price LKR</h6></th>
+									<th><h6>Orderd Quantity</h6></th>  
+									<th><h6>Total product price</h6></th>  
 								</tr>
 							</thead>
 							<tbody>
@@ -35,18 +36,32 @@
 										<div>
 					                        <div>
 										
-												<h6>{{ item.availableStockQty}}</h6>
+												<h6>{{ item.orderdQty}}</h6>
 												
 											</div>
                     					</div>
 									</td>
+								
 									<td>
-										<strong>{{ (item.availableStockQty * item.unitPrice) | currency:'LKR' }}</strong>
+										<div>
+					                        <div>
+										<strong>{{ (item.orderdQty * item.unitPrice) | currency:'LKR' }}</strong>
+									</div>
+								</div>
 									</td>
+									<td>
+									<div>
+										<div>
+									
+											<h6>{{ item.productCurrentStatus}}</h6>
+											
+										</div>
+									</div>
+								</td>
 									<td >
 										<div >
 					                        <div>
-												<button type="button" class="close" aria-label="Remove Item" (click)="removeItemFromCart(item.id)">
+												<button type="button" class="close" aria-label="Remove Item" (click)="removeItemFromCart(item.productId)">
 													<span aria-hidden="true">&times;</span>
 												  </button> 
 											</div>
@@ -65,6 +80,7 @@
 					<a class="site-btn sb-yellow" (click)="emptyCart()"> Clear Cart</a>
 					<a class="site-btn"(click)="Checkout()">Proceed to checkout</a>
 					<a routerLink=" " class="site-btn sb-dark">Continue shopping</a>
+					<a routerLink="/payment" class="site-btn sb-red">Payment</a>
 				</div>
 			</div>
 		</div>

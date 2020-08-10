@@ -65,7 +65,7 @@ export class ProductviewService {
 
     for (let i in this.items) {
       if (this.items[i].productId === product.productId) {
-        this.items[i].qty++
+        this.items[i].orderdQty++
         productExists = true
         break;
       }
@@ -75,8 +75,10 @@ export class ProductviewService {
       this.items.push({
         productId: product.productId,
         productName: product.productName,
-        availableStockQty: 1,
-        unitPrice: product.unitPrice 
+        orderdQty: 1,
+        unitPrice: product.unitPrice,
+        productCurrentStatus:true
+        
   
         
       })
@@ -116,8 +118,8 @@ export class ProductviewService {
     var item=this.items.indexOf(productId);
     this.items.splice(item);
 
-
   }
+  
   errorHandler(error) {
     let errorMessage = '';
       if (error.error instanceof ErrorEvent) {

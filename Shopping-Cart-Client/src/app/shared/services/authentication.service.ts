@@ -11,46 +11,41 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<Customer>;
-  public currentUser: Observable<Customer>;
+  myAppUrl: string;
+  myApiUrl: string;
+    private currentUserSubject: BehaviorSubject<Customer>;
+    public currentUser: Observable<Customer>;
 
-  constructor(private router: Router,private http: HttpClient) {
-      this.currentUserSubject = new BehaviorSubject<Customer>(JSON.parse(localStorage.getItem('currentUser')));
-      this.currentUser = this.currentUserSubject.asObservable();
-  }
+    constructor(private http: HttpClient) {
+        this.myAppUrl = environment.appUrl;
+        this.myApiUrl = 'user/authenticate';
+        this.currentUserSubject = new BehaviorSubject<Customer>(JSON.parse(localStorage.getItem('currentUser')));
+        this.currentUser = this.currentUserSubject.asObservable();
+    }
 
-  public get currentUserValue(): Customer {
-      return this.currentUserSubject.value;
-  }
+    public get currentUserValue(): Customer {
+        return this.currentUserSubject.value;
+    }
 
-  login(username: string, password: string) {
-      return this.http.post<any>(`${environment.appUrl}user/authenticate`, { username, password })
-          .pipe(map(user => {
-              // store user details and jwt token in local storage to keep user logged in between page refreshes
-              localStorage.setItem('currentUser', JSON.stringify(user));
-              this.currentUserSubject.next(user);
-              return user;
-          }));
-  }
+    login(username: string, password: string) {
+        return this.http.post<any>(this.myAppUrl + this.myApiUrl, { username, password })
+            .pipe(map(user => {
+                // login successful if there's a jwt token in the response
+                if (user && user.token) {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    this.currentUserSubject.next(user);
+                }
 
-  logout() {
-      // remove user from local storage to log user out
-      localStorage.removeItem('currentUser');
-      this.currentUserSubject.next(null);
-      this.router.navigate(['/account/login']);
-  }
+                
+                return user;
+            }));
+    }
 
-register(user: Customer) {
-    return this.http.post(`${environment.appUrl}user/register`, user);
-}
-
-getAll() {
-    return this.http.get<Customer[]>(`${environment.appUrl}user`);
-}
-
-getById(id: string) {
-    return this.http.get<Customer>(`${environment.appUrl}user/${id}`);
-}
-
+    logout() {
+        // remove user from local storage to log user out
+        localStorage.removeItem('currentUser');
+        this.currentUserSubject.next(null);
+    }
 }
 

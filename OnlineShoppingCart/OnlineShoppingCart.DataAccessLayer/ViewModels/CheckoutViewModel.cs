@@ -6,11 +6,12 @@ namespace OnlineShoppingCart.DataAccessLayer.ViewModels
 {
     public class CheckoutViewModel
     {
-        public int ProductId { get; set; }
-        public int AvailableStockQty { get; set; }
-        public string ProductName { get; set; }
-        public decimal UnitPrice { get; set; }
-        public decimal TotalPrice { get; set; }
+        public int CustomerId { get; set; }
+        public string UserName { get; set; }
+        public string Token { get; set; }
+
+        public List<SelectedListViewModel> selectedListViewModel { get; set; }
+
     }
 
 
