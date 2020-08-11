@@ -28,12 +28,7 @@ export class CheckoutService {
     map(res => res));
     } 
     
-    removeProductFromCart(productId) {
-      var item=this.items.indexOf(productId);
-      this.items.splice(item);
-  
-  
-    }
+ 
   errorHandler(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

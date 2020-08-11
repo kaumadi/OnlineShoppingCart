@@ -32,7 +32,7 @@ export class ProductCartComponent implements OnInit {
   customer:Customer
   productName:string
   productStockStatus: ProductStockStatus;
-
+  show: boolean 
   constructor(private productviewService: ProductviewService,
     private checoutService:CheckoutService,
     private authenticationService: AuthenticationService) {
@@ -63,10 +63,10 @@ export class ProductCartComponent implements OnInit {
   }
 
   removeItemFromCart(productId) {
-   
-   var item=this.items.indexOf(productId);
-   this.items.splice(item);
-
+   this.productviewService.removeProductFromCart(productId);
+  //  var item=this.items.indexOf(productId);
+  //  this.items.splice(item);
+  this.items = this.productviewService.getItems();
   }
   
 
@@ -85,9 +85,17 @@ this.checkoutViewModel.selectedListViewModel=this.items
 //this.checkoutViewModel.customerId=this.currentUser.customerId;
    this.checoutService.Checkout(this.checkoutViewModel)
    .subscribe((data)=>{
-     this.productStockStatus=data
-     this.items= this.productStockStatus
-    console.log(this.productStockStatus);
+     this.items=data
+     this.productviewService.items=this.items
+ for(var item of this.items){
+if( item.productCurrentStatus==false)
+{
+this.show==false
+}
+else{
+  this.show==true
+}}
+    console.log(this.items);
     })   
   }
 

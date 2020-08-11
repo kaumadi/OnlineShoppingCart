@@ -115,7 +115,7 @@ export class ProductviewService {
   }
  
   removeProductFromCart(productId) {
-    var item=this.items.indexOf(productId);
+    var item=this.items.indexOf(productId);  
     this.items.splice(item);
 
   }
