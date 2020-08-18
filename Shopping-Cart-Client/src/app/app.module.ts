@@ -20,6 +20,8 @@ import { AlertComponent } from './alert/alert.component';
 import { RegisterComponent } from './register/register.component';
 import { CheckoutService } from './shared/services/checkout.service';
 import { PaymentComponent } from './payment/payment.component';
+import { PaymentService } from './shared/services/payment.service';
+import { OrderDetailsComponent } from './order-details/order-details.component';
 
 
 @NgModule({
@@ -34,6 +36,7 @@ import { PaymentComponent } from './payment/payment.component';
     AlertComponent,
     RegisterComponent,
     PaymentComponent,
+    OrderDetailsComponent,
     
   ],
   imports: [
@@ -44,7 +47,7 @@ import { PaymentComponent } from './payment/payment.component';
     BrowserAnimationsModule,
     FormsModule
   ],
-  providers: [ProductviewService,Globals,CheckoutService,        
+  providers: [ProductviewService,Globals,CheckoutService,PaymentService,        
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
   bootstrap: [AppComponent]

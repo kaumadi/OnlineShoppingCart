@@ -1,36 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { CheckoutViewModel } from '../view-models/checkoutViewModel';
-import { Observable, throwError, pipe } from 'rxjs';
-import { Customer } from '../models/customer';
+import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
+import { throwError } from 'rxjs/internal/observable/throwError';
 import { PaymentViewModel } from '../view-models/paymentViewModel';
-import { retry } from 'rxjs/internal/operators/retry';
-import { catchError } from 'rxjs/internal/operators/catchError';
-
 
 @Injectable({
   providedIn: 'root'
 })
-export class CheckoutService {
-
+export class PaymentService {
 
   myAppUrl: string;
   myApiUrl: string;
 
   constructor(private http: HttpClient) {
       this.myAppUrl = environment.appUrl;
-      this.myApiUrl = 'api/order/Checkout';
+      this.myApiUrl = 'api/Order/Payment';
   
   }
-  Checkout(checkoutViewModel:CheckoutViewModel) : Observable<any>{ 
-    console.log(checkoutViewModel); 
-    return this.http.post<any>(this.myAppUrl  + this.myApiUrl, checkoutViewModel)  
-   .pipe(
-    map(res => res));
+  Payment(paymentViewModel:PaymentViewModel) : Observable<any>{ 
+    console.log(paymentViewModel); 
+    return this.http.post<any>(this.myAppUrl  + this.myApiUrl, paymentViewModel)  
     } 
-    
     
  
   errorHandler(error) {

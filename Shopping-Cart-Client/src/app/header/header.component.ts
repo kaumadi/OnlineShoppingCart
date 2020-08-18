@@ -12,8 +12,11 @@ import { Subscription } from 'rxjs/internal/Subscription';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
   currentUser: Customer;
   currentUserSubscription: Subscription;
+  show=true 
+  id:number
  
 
   constructor(private router: Router,
@@ -21,18 +24,21 @@ export class HeaderComponent implements OnInit {
       this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
       this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
         this.currentUser = user;
-        
+        if(user !==null)
+        { this.show=true}
+        else{
+          this.show=false
+        }
       });
     }
 
   ngOnInit(){
-
-
+  
   }
+
   logout() {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
-}
-
+  }
 
 }

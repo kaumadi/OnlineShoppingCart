@@ -1,5 +1,7 @@
-﻿using OnlineShoppingCart.DataAccessLayer.ViewModels;
+﻿using OnlineShoppingCart.DataAccessLayer.Models;
+using OnlineShoppingCart.DataAccessLayer.ViewModels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OnlineShoppingCart.BusinessLayer.IRepositories
 {
@@ -7,5 +9,6 @@ namespace OnlineShoppingCart.BusinessLayer.IRepositories
     {
         List<ProductStockStatus> Checkout(CheckoutViewModel checkoutViewModel);
         void AddPurchase (PurchaseViewModel purchaseViewModel);
+        Task<List<OrderDetailsViewModel>> GetOrderDetailsAsync();
     }
 }

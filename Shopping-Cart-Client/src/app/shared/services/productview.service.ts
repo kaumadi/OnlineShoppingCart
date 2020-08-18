@@ -18,7 +18,7 @@ export class ProductviewService {
   public count:number;
   public productName:string
 
-
+  
   myAppUrl: string;
   myApiUrl: string;
   httpOptions = {
@@ -57,7 +57,7 @@ export class ProductviewService {
   //productExistInCart.count += 1;
  //  this.items.push(product);
  //}
- cartTotal = 0
+ public cartTotal = 0
 
   addToCart(product) {
 
@@ -78,15 +78,13 @@ export class ProductviewService {
         orderdQty: 1,
         unitPrice: product.unitPrice,
         productCurrentStatus:true
-        
-  
-        
+       
       })
     }
 
     this.cartTotal = 0
     this.items.forEach(item => {
-      this.cartTotal += (item.qty * item.unitPrice)
+      this.cartTotal += (item.orderdQty * item.unitPrice)
     })
   }
   getItems(){
@@ -112,6 +110,7 @@ export class ProductviewService {
  // Remove all the items added to the cart
   emptryCart() {
     this.items.length = 0;
+    this.cartTotal=null
   }
  
   removeProductFromCart(productId) {

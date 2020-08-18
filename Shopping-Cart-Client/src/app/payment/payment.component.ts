@@ -4,6 +4,12 @@ import { Customer } from '../shared/models/customer';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ProductviewService } from '../shared/services/productview.service';
+import { PaymentService } from '../shared/services/payment.service';
+import { PaymentViewModel } from '../shared/view-models/paymentViewModel';
+import { first } from 'rxjs/operators';
+import { AlertService } from '../shared/services/alert.service';
+
+
 
 @Component({
   selector: 'app-payment',
@@ -16,14 +22,23 @@ export class PaymentComponent implements OnInit {
   currentUserSubscription: Subscription
   paymentform: FormGroup;
   items
+  currentDate = new Date();
+  paymentViewModel:PaymentViewModel
+  public paymentMethod:string
+  public cartTotal: number = 0;
+  
+
   
   constructor(
     private authenticationService: AuthenticationService,
     private formBuilder: FormBuilder,
-    private productviewService: ProductviewService) {
+    private productviewService: ProductviewService,
+    private paymentService:PaymentService,
+    private alertService: AlertService){
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
-      this.currentUser = user;    
+      this.currentUser = user; 
+    
     });
 
    }
@@ -34,13 +49,61 @@ export class PaymentComponent implements OnInit {
       lastName:this.currentUser.lastName,
       address:this.currentUser.address,
       email:this.currentUser.email,
-      contact:this.currentUser.contact
+      contact:this.currentUser.contact,
+      paymentMethod:('')
 
 
   });
+  console.log(this.currentDate);
   this.items = this.productviewService.getItems();
   console.log(this.items);
+  this.paymentViewModel = new PaymentViewModel();
+  this.getTotalAmount();
   }
- 
 
+  changePaymentMethod(paymentOptione) {
+    this.paymentMethod=paymentOptione.target.value
+    console.log(paymentOptione.target.value);
+  }
+
+Payment(){
+ // this.alertService.clear();
+  this.paymentViewModel.totalAmount=10000
+   this.paymentViewModel.orderDate=this.currentDate
+   this.paymentViewModel.customerId=this.currentUser.customerId
+   this.paymentViewModel.token=this.currentUser.token
+   this.paymentViewModel.selectedListViewModel=this.items
+   this.paymentViewModel.PaymentType=this.paymentMethod
+   this.paymentService.Payment(this.paymentViewModel)
+   .pipe(first())
+            .subscribe(
+                data => {
+                  //check alert not working
+                    //this.alertService.success('Payment successfully');
+                    window.alert('Payment successful');
+                    this.clear();
+                   // this.router.navigate(['../login'], { relativeTo: this.route });
+                 
+                   
+                },
+                error => {
+                    this.alertService.error(error);
+                  
+                });
 }
+
+clear(){
+  this.paymentform.reset()
+  this.items=[]
+  this.productviewService.items=this.items
+}
+
+getTotalAmount(){
+  //this.cartTotal = 0
+  this.items.forEach(item => {
+    this.cartTotal += (item.orderdQty * item.unitPrice)
+  })
+  //this.cartTotal=this.productviewService.cartTotal
+}
+}
+

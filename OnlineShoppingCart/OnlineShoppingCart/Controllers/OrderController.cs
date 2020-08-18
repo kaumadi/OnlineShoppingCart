@@ -47,7 +47,6 @@ namespace OnlineShoppingCart.Controllers
         }
         #endregion Checkout ActionResult
 
-
         #region PurchaseItem ActionResult
 
         /// <summary>
@@ -55,8 +54,8 @@ namespace OnlineShoppingCart.Controllers
         /// </summary>
         /// <param name="purchaseViewModel"></param>
         /// <returns></returns>
-        [HttpPost("Purchase")]
-        public ActionResult PurchaseItem([FromBody]PurchaseViewModel purchaseViewModel)
+        [HttpPost("Payment")]
+        public ActionResult Payment([FromBody]PurchaseViewModel purchaseViewModel)
         {
             if (purchaseViewModel == null)
             {
@@ -66,10 +65,23 @@ namespace OnlineShoppingCart.Controllers
             {
                 return BadRequest(ModelState);
             }
-            _orderService?.AddPurchase(purchaseViewModel);
+             _orderService?.AddPurchase(purchaseViewModel);
             return Ok();
         }
 
         #endregion PurchaseItem ActionResult
+
+        #region Oreder Details       
+        /// <summary>
+        /// GET: api/product
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("test")]
+        public async Task<IActionResult> GetOrderDetailsAsync()
+        {
+            var results = await _orderService?.GetOrderDetailsAsync();
+            return Ok(results);
+        }
+        #endregion
     }
 }
