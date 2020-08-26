@@ -10,8 +10,8 @@ using OnlineShoppingCart.DataAccessLayer.Contexts;
 namespace OnlineShoppingCart.Migrations
 {
     [DbContext(typeof(OnlineShoppingCartContext))]
-    [Migration("20200731131656_ShopMedatabase")]
-    partial class ShopMedatabase
+    [Migration("20200824201448_New_Database")]
+    partial class New_Database
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -143,7 +143,7 @@ namespace OnlineShoppingCart.Migrations
 
                     b.HasIndex("ProductsProductId");
 
-                    b.ToTable("OrderItemProduct");
+                    b.ToTable("OrderItemProducts");
                 });
 
             modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.Payment", b =>

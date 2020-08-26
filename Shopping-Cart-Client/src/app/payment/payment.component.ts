@@ -8,6 +8,7 @@ import { PaymentService } from '../shared/services/payment.service';
 import { PaymentViewModel } from '../shared/view-models/paymentViewModel';
 import { first } from 'rxjs/operators';
 import { AlertService } from '../shared/services/alert.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 
@@ -26,7 +27,7 @@ export class PaymentComponent implements OnInit {
   paymentViewModel:PaymentViewModel
   public paymentMethod:string
   public cartTotal: number = 0;
-  
+
 
   
   constructor(
@@ -34,7 +35,9 @@ export class PaymentComponent implements OnInit {
     private formBuilder: FormBuilder,
     private productviewService: ProductviewService,
     private paymentService:PaymentService,
-    private alertService: AlertService){
+    private alertService: AlertService,
+    private route: ActivatedRoute,
+    private router: Router){
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user; 
@@ -68,7 +71,7 @@ export class PaymentComponent implements OnInit {
 
 Payment(){
  // this.alertService.clear();
-  this.paymentViewModel.totalAmount=10000
+  this.paymentViewModel.totalAmount=this.cartTotal
    this.paymentViewModel.orderDate=this.currentDate
    this.paymentViewModel.customerId=this.currentUser.customerId
    this.paymentViewModel.token=this.currentUser.token
@@ -80,15 +83,16 @@ Payment(){
                 data => {
                   //check alert not working
                     //this.alertService.success('Payment successfully');
+                    console.log(data);
                     window.alert('Payment successful');
                     this.clear();
-                   // this.router.navigate(['../login'], { relativeTo: this.route });
+                    this.router.navigate(['/orderDetails',data], { relativeTo: this.route });
                  
                    
                 },
                 error => {
                     this.alertService.error(error);
-                  
+                                                       
                 });
 }
 

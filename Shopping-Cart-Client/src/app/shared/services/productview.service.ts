@@ -98,13 +98,18 @@ export class ProductviewService {
 
   // Calculate total price on item added to the cart
  getTotalPrice() {
-   let total = 0;
+  //  let total = 0;
 
-    this.items.map(item => {
-      total += item.unitPrice;
-    });
+  //   this.items.map(item => {
+  //     total += item.unitPrice;
+  //   });
 
-    return total
+  //   return total
+  this.cartTotal = 0
+  this.items.forEach(item => {
+    this.cartTotal += (item.orderdQty * item.unitPrice)
+  })
+  
   }
 
  // Remove all the items added to the cart
@@ -113,10 +118,10 @@ export class ProductviewService {
     this.cartTotal=null
   }
  
-  removeProductFromCart(productId) {
-    var item=this.items.indexOf(productId);  
-    this.items.splice(item);
-
+  removeProductFromCart(index) {
+   // const index=this.items.indexOf(productId);  
+    this.items.splice(index,1)
+    this.getTotalPrice();
   }
   
   errorHandler(error) {

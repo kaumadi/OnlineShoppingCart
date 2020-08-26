@@ -1,1 +1,90 @@
-<p>order-details works!</p>
+
+<section class="checkout-section spad">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-6 order-2 order-lg-1">
+            
+                     <form [formGroup]="orderDetailsForm" class="checkout-form">
+                    <div class="cf-title">Order Details</div>
+                  
+                    <div class="row">
+                        <div class="col-md-7">
+                            <p>*Order Number : OID_{{orderDetails.orderId}}</p>
+                        </div>    
+                    </div>
+                      <div class="row">
+                       <div class="col-md-7">
+                            <p>*Order Date : {{orderDetails.orderDate|date:'long'}}</p>
+                        </div>  
+                    </div> 
+                  
+                    <div class="row">
+                        <div class="col-md-7">
+                            <p>*Customer Name : {{orderDetails.firstName}} {{orderDetails.lastName}}                                
+                            </p>
+                        </div>    
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <p>*Shipping Addres : {{orderDetails.address}}</p>
+                        </div>    
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <p>*Contact Number: {{orderDetails.contact}}</p>
+                        </div>    
+                    </div>
+                    <!-- <div class="row address-inputs" >
+                        <div class="col-md-6">
+                            <input type="text" id="firstName" name="firstName" placeholder="Customer Name" ngmodel="orderDetails.firstName"disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" formControlName="lastName" placeholder="Customer Name" disabled> 
+                        </div>
+                      
+                            <div class="col-md-12">
+                            <input  type="text" formControlName="address" placeholder="Address" disabled>
+                        </div>
+               
+                     
+                        <div class="col-md-6">
+                            <input type="text" formControlName="contact" placeholder="Phone no." disabled>
+                        </div>
+                       
+                    </div> -->
+                </form> 
+            </div>
+            <div class="col-lg-6 order-2 order-lg-2">
+                <div class="checkout-cart">
+                    <h3>Orderd Items</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                              <th>Product Name</th>
+                              <th>Orderd Quantity</th>
+                              <th>Unit Price</th>
+                             
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let od of orderDetails.orderItemsViewModel">
+                            <td>{{od.productName}}</td>
+                            <td ><img src="./assets/productimages/{{od.imagePath}}" alt=""  style="max-height: 80px; max-width: 80px;"> </td>
+                            <td>{{od.quantity}}</td>
+                            <td>{{od.unitPrice}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+            
+                    <ul class="price-list">
+                       
+                        <li class="total">Total : LKR{{orderDetails.totalAmount}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- checkout section end -->

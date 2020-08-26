@@ -16,7 +16,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr *ngFor="let item of items">
+								<tr *ngFor="let item of items let i=index">
 									<td >
 										<!-- <img src="img/cart/1.jpg" alt=""> -->
 										<div>
@@ -61,7 +61,7 @@
 									<td >
 										<div >
 					                        <div>
-												<button type="button" class="close" aria-label="Remove Item" (click)="removeItemFromCart(item.productId)">
+												<button type="button" class="close" aria-label="Remove Item" (click)="removeItemFromCart(i)">
 													<span aria-hidden="true">&times;</span>
 												  </button> 
 											</div>
@@ -80,7 +80,8 @@
 					<a class="site-btn sb-yellow" (click)="emptyCart()"> Clear Cart</a>
 					<a  class="site-btn"(click)="Checkout()">Proceed to checkout</a>
 					<a routerLink=" " class="site-btn sb-dark">Continue shopping</a>
-					<a  routerLink="/payment" class="site-btn sb-red">Payment</a>
+					<div *ngIf="show"><a routerLink="/payment" class="site-btn sb-red">Payment</a></div>
+					
 				
 					<!-- *ngIf="show" -->
 				</div>

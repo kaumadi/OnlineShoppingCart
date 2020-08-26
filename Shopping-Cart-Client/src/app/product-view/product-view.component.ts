@@ -20,7 +20,7 @@ export class ProductViewComponent implements OnInit {
   totalcartvalue = 0;
   conditionToDisaply=false;
   public cartitemcount:number;
-  
+  customer_Id:number
 
 
   currentUser: Customer;
@@ -38,7 +38,8 @@ export class ProductViewComponent implements OnInit {
   ngOnInit() {
     this.loadProducts();
     this.cartitemcount=this.productviewService.getItems().length;
-   this.loadAllUsers();
+  // this.loadAllUsers();
+   //this.currentUser.customerId=this.customer_Id
   
   }
   
@@ -54,11 +55,11 @@ export class ProductViewComponent implements OnInit {
     console.log( this.cartitemcount);
   }
 
-  private loadAllUsers() {
-    this.customerService.getAllCustomers().pipe(first()).subscribe(users => {
-        this.users = users;      
-    });
-}
+//   private loadAllUsers() {
+//     this.customerService.getAllCustomers().pipe(first()).subscribe(users => {
+//         this.users = users;      
+//     });
+// }
   
   }
  

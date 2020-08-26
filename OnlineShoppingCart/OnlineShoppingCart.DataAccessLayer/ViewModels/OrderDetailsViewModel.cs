@@ -12,10 +12,11 @@ namespace OnlineShoppingCart.DataAccessLayer.ViewModels
             public decimal TotalAmount { get; set; }
             public string PaymentMethod { get; set; }
             public int CustomerId { get; set; }
-            public string CustomerName { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
             public string Address { get; set; }
             public string Contact { get; set; }
-            public List<OrderItem> orderItems { get; set; }
+            public List<OrderItemsViewModel> orderItemsViewModel { get; set; }
           
     }
 }

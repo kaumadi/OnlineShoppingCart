@@ -141,7 +141,7 @@ namespace OnlineShoppingCart.Migrations
 
                     b.HasIndex("ProductsProductId");
 
-                    b.ToTable("OrderItemProduct");
+                    b.ToTable("OrderItemProducts");
                 });
 
             modelBuilder.Entity("OnlineShoppingCart.DataAccessLayer.Models.Payment", b =>

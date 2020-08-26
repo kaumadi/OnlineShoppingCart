@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, HostListener } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -15,13 +15,15 @@ import { Globals } from './shared/globals';
 import { JwtInterceptor } from './shared/helpers/jwt.interceptor';
 import { ErrorInterceptor } from './shared/helpers/error.interceptor';
 import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
 import { AlertComponent } from './alert/alert.component';
 import { RegisterComponent } from './register/register.component';
 import { CheckoutService } from './shared/services/checkout.service';
 import { PaymentComponent } from './payment/payment.component';
 import { PaymentService } from './shared/services/payment.service';
 import { OrderDetailsComponent } from './order-details/order-details.component';
+import { AlertService } from './shared/services/alert.service';
+import { OrderDetailsService } from './shared/services/order-details.service';
+import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 
 
 @NgModule({
@@ -32,11 +34,11 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
     FooterComponent,
     HeaderComponent,
     LoginComponent,
-    HomeComponent,
     AlertComponent,
     RegisterComponent,
     PaymentComponent,
     OrderDetailsComponent,
+    PaymentHistoryComponent,
     
   ],
   imports: [
@@ -47,9 +49,11 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
     BrowserAnimationsModule,
     FormsModule
   ],
-  providers: [ProductviewService,Globals,CheckoutService,PaymentService,        
+  providers: [ProductviewService,Globals,CheckoutService,PaymentService,AlertService,OrderDetailsService,     
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {@HostListener("window:onbeforeunload",["$event"])
+clearLocalStorage(event){
+    localStorage.clear() }}

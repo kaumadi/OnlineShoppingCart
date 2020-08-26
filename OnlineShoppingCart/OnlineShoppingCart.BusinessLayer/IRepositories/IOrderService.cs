@@ -8,7 +8,8 @@ namespace OnlineShoppingCart.BusinessLayer.IRepositories
     public interface IOrderService
     {
         List<ProductStockStatus> Checkout(CheckoutViewModel checkoutViewModel);
-        void AddPurchase (PurchaseViewModel purchaseViewModel);
-        Task<List<OrderDetailsViewModel>> GetOrderDetailsAsync();
+        int AddPurchase (PurchaseViewModel purchaseViewModel);
+        Task<OrderDetailsViewModel> GetOrderDetailsAsync(int orderId);
+        Task<IEnumerable<PaymentHistoryViewModel>> GetAllPaymentsAsync(int customerId);
     }
 }

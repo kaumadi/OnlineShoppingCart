@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using OnlineShoppingCart.BusinessLayer.IRepositories;
 using OnlineShoppingCart.DataAccessLayer.Contexts;
 using OnlineShoppingCart.DataAccessLayer.Models;
@@ -52,7 +53,7 @@ namespace OnlineShoppingCart.BusinessLayer.Services
         #endregion
 
         #region Payment
-        public void AddPurchase(PurchaseViewModel purchaseViewModel)
+        public int AddPurchase(PurchaseViewModel purchaseViewModel)
         {
             var order = new Order();
             {
@@ -83,54 +84,87 @@ namespace OnlineShoppingCart.BusinessLayer.Services
                 {
                     orderItemProduct.OrderItems = _shoppingcartContext.OrderItems.First(c => c.OrderItemId == orderItemId);
                     orderItemProduct.Products = _shoppingcartContext.Products.First(c => c.ProductId == purchase.ProductId);
+                    _shoppingcartContext.OrderItemProducts.Add(orderItemProduct);
                     _shoppingcartContext.SaveChanges();
                 }
-
-                Product product = new Product();
-                {
-                    
-                    bool stock=_shoppingcartContext.Products.Where(i=>i.ProductId==purchase.ProductId).Any();
-                    if (stock == true) {
-                        product.UnitsInStock  -= purchase.OrderdQty;
-                        _shoppingcartContext.SaveChanges();
-                    }
-                    
-                }
-
-
-
-                Payment payment = new Payment();
-                {
-                    payment.PaymentType = purchaseViewModel.PaymentType;
-                    payment.Orders = _shoppingcartContext.Orders.First(c => c.OrderId == orderID);
-                    _shoppingcartContext.Payments.Add(payment);
-                    _shoppingcartContext.SaveChanges();
-                }               
             }
+
+
+            Payment payment = new Payment();
+            {
+                payment.PaymentType = purchaseViewModel.PaymentType;
+                payment.Orders = _shoppingcartContext.Orders.First(c => c.OrderId == orderID);
+                _shoppingcartContext.Payments.Add(payment);
+                _shoppingcartContext.SaveChanges();
+            }
+
+            foreach (var orderItem in purchaseViewModel.selectedListViewModel)
+            {
+                Product product = new Product();
+                var orderItemToUpdate = _shoppingcartContext.Products.FirstOrDefault(c => c.ProductId == orderItem.ProductId);
+                orderItemToUpdate.UnitsInStock -= orderItem.OrderdQty;
+                product.UnitsInStock = orderItemToUpdate.UnitsInStock;
+                _shoppingcartContext.Entry(product).CurrentValues.SetValues(orderItemToUpdate);
+                _shoppingcartContext.SaveChanges();
+            }
+
+            return orderID;
+
         }
         #endregion
 
         #region GetOrderDetailsAsync
-        public  async Task<List<OrderDetailsViewModel>> GetOrderDetailsAsync()
+        public async Task<OrderDetailsViewModel> GetOrderDetailsAsync(int orderId)
         {
+            OrderDetailsViewModel query = await _shoppingcartContext.Orders.
+            Join(_shoppingcartContext.Customers, order => order.Customers.CustomerId, customer => customer.CustomerId,
+            (order, customer) => new { order, customer })
+           .Join(_shoppingcartContext.Payments, orderPayment => orderPayment.order.OrderId, payment => payment.Orders.OrderId, (orderPayment, payment) => new { orderPayment, payment })
+            .Join(_shoppingcartContext.OrderItems, itemsorder => itemsorder.orderPayment.order.OrderId, ordeItem => ordeItem.Orders.OrderId, (itemsorder, ordeItem) => new { itemsorder, ordeItem })
+            .Where(m => m.itemsorder.orderPayment.order.OrderId == orderId)
+            .Select(m => new OrderDetailsViewModel
+            {
+                OrderId = m.itemsorder.orderPayment.order.OrderId,
+                OrderDate = m.itemsorder.orderPayment.order.OrderDate,
+                TotalAmount = m.itemsorder.orderPayment.order.TotalAmount,
+                CustomerId = m.itemsorder.orderPayment.order.Customers.CustomerId,
+                FirstName = m.itemsorder.orderPayment.order.Customers.FirstName,
+                LastName = m.itemsorder.orderPayment.order.Customers.LastName,
+                Address = m.itemsorder.orderPayment.order.Customers.Address,
+                Contact = m.itemsorder.orderPayment.order.Customers.Contact,
+                PaymentMethod = m.itemsorder.payment.PaymentType,
 
-            
+            }).FirstOrDefaultAsync(c => c.OrderId==orderId);
+           // var orderdetailslist = _shoppingcartContext.OrderItems.Where(oid => oid.Orders.OrderId == orderId).ToList();
+            var orderdetailslist = _shoppingcartContext.OrderItems
+                .Join(_shoppingcartContext.OrderItemProducts, oip => oip.OrderItemId, oi => oi.OrderItems.OrderItemId,
+            (oip, oi) => new { oip, oi })
+                .Where(oid => oid.oip.Orders.OrderId == orderId)
+           .Select(s => new OrderItemsViewModel
+            {
+                OrderItemId = s.oip.OrderItemId,
+                Quantity = s.oip.Quantity,
+                UnitPrice = s.oip.UnitPrice,
+                ProductName=s.oi.Products.ProductName,
+                ImagePath=s.oi.Products.ImagePath
+            }).ToList();
+            query.orderItemsViewModel = orderdetailslist;
 
-           // List<OrderItem> orderItems = await _shoppingcartContext.OrderItems.ToListAsync();
+            return query;
 
-            var ap = await (from p in _shoppingcartContext.Orders
-                            join q in _shoppingcartContext.OrderItems on p.OrderId equals q.Orders.OrderId
-                            join e in _shoppingcartContext.Payments on p.OrderId equals e.Orders.OrderId
-                            select new OrderDetailsViewModel
-                            {
-                                OrderId = p.OrderId,
-                                OrderDate = p.OrderDate 
-                            }).ToListAsync();
-
-
-            return ap; 
         }
         #endregion
 
+        #region Payment History
+        public async Task<IEnumerable<PaymentHistoryViewModel>> GetAllPaymentsAsync(int customerId)
+        {
+            return await _shoppingcartContext.Orders.Where(oid => oid.Customers.CustomerId == customerId)
+                .Select(c=>new PaymentHistoryViewModel
+                { OrderId=c.OrderId,
+                OrderDate=c.OrderDate,
+                TotalAmount=c.TotalAmount
+                }).ToListAsync();
+        }
+        #endregion
     }
 }

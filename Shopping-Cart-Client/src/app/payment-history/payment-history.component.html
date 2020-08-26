@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="col-lg-12 order-2 order-lg-2">
+        <div class="checkout-cart">
+            <h3>Payment History</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                      <th>Order Number</th>
+                      <th>Order Date</th>
+                      <th>Toatal Amount</th>
+                      <th>Order Details</th>
+                     
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let order of payments">
+                    <td>{{order.orderId}}</td>
+                    <td>{{order.orderDate}}</td>
+                    <td>{{order.totalAmount}}</td>
+                    <td><button type="button" class="btn btn-outline-success" [routerLink]="['/orderDetails', order.orderId]">View</button></td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+</div>

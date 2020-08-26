@@ -65,8 +65,8 @@ namespace OnlineShoppingCart.Controllers
             {
                 return BadRequest(ModelState);
             }
-             _orderService?.AddPurchase(purchaseViewModel);
-            return Ok();
+            var result = _orderService?.AddPurchase(purchaseViewModel);
+            return Ok(result);
         }
 
         #endregion PurchaseItem ActionResult
@@ -76,10 +76,19 @@ namespace OnlineShoppingCart.Controllers
         /// GET: api/product
         /// </summary>
         /// <returns></returns>
-        [HttpGet("test")]
-        public async Task<IActionResult> GetOrderDetailsAsync()
+        [HttpGet("{orderId}")]
+        public async Task<IActionResult> GetOrderDetailsAsync(int orderId)
         {
-            var results = await _orderService?.GetOrderDetailsAsync();
+             var r=await _orderService?.GetOrderDetailsAsync(orderId);
+            return Ok(r);
+        }
+        #endregion
+
+        #region
+        [HttpGet("paymentHistory/{customer_id}")]
+        public async Task<IActionResult> GetAllPaymentsAsync(int customer_id)
+        {
+            var results = await _orderService?.GetAllPaymentsAsync(customer_id);
             return Ok(results);
         }
         #endregion

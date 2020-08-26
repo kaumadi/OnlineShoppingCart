@@ -38,6 +38,7 @@ export class ProductCartComponent implements OnInit {
   paymentViewModel:PaymentViewModel
 
 
+
   constructor(private productviewService: ProductviewService,
     private checoutService:CheckoutService,
     private authenticationService: AuthenticationService,private router: Router) {
@@ -72,12 +73,13 @@ export class ProductCartComponent implements OnInit {
     
   }
 
-  removeItemFromCart(productId) {
-   this.productviewService.removeProductFromCart(productId);
+  removeItemFromCart(index) {
+   this.productviewService.removeProductFromCart(index);
 
     //  var item=this.items.indexOf(productId);
   //  this.items.splice(item);
   this.items = this.productviewService.getItems();
+  this.getTotalAmount();
   }
   
 
@@ -101,13 +103,18 @@ this.checkoutViewModel.selectedListViewModel=this.items
    .subscribe((data)=>{
      this.items=data
      this.productviewService.items=this.items
+
+   //  this.items = item.filter((x) => x.Name.includes("ABC"))
+
  for(var item of this.items){
-if( item.productCurrentStatus==false)
+if( item.productCurrentStatus !==true)
 {
-this.show==false
+   this.show=false
+   console.log("false found");
+break
 }
 else{
-  this.show==true
+  this.show=true
 }}
     console.log(this.items);
     })   

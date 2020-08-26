@@ -1,5 +1,7 @@
 export class OrderItemsViewModel{
    orderItemId:number
-   orderItemName:string
-   orderdQty:number
+   quantity:number
+   unitPrice:number
+   productName:string
+   imagePath:string
 }

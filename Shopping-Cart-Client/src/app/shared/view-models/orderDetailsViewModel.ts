@@ -2,13 +2,14 @@
 
 export class OrderDetailsViewModel{
     orderId:number
-    oderDate:Date
+    orderDate:Date
     totalAmount:number
     paymentMethod:string
-    orderItems:OrderItemsViewModel[]
+    orderItemsViewModel:OrderItemsViewModel[]
     customerId:number
-    customerName:string
-    Address:string
+    firstName:string
+    lastName:string
+    address:string
     contact:string
     
 }

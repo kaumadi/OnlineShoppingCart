@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OnlineShoppingCart.Migrations
 {
-    public partial class ShopMedatabase : Migration
+    public partial class New_Database : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -129,7 +129,7 @@ namespace OnlineShoppingCart.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderItemProduct",
+                name: "OrderItemProducts",
                 columns: table => new
                 {
                     OrderItemProductId = table.Column<int>(nullable: false)
@@ -139,15 +139,15 @@ namespace OnlineShoppingCart.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderItemProduct", x => x.OrderItemProductId);
+                    table.PrimaryKey("PK_OrderItemProducts", x => x.OrderItemProductId);
                     table.ForeignKey(
-                        name: "FK_OrderItemProduct_OrderItems_OrderItemsOrderItemId",
+                        name: "FK_OrderItemProducts_OrderItems_OrderItemsOrderItemId",
                         column: x => x.OrderItemsOrderItemId,
                         principalTable: "OrderItems",
                         principalColumn: "OrderItemId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_OrderItemProduct_Products_ProductsProductId",
+                        name: "FK_OrderItemProducts_Products_ProductsProductId",
                         column: x => x.ProductsProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
@@ -155,13 +155,13 @@ namespace OnlineShoppingCart.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItemProduct_OrderItemsOrderItemId",
-                table: "OrderItemProduct",
+                name: "IX_OrderItemProducts_OrderItemsOrderItemId",
+                table: "OrderItemProducts",
                 column: "OrderItemsOrderItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItemProduct_ProductsProductId",
-                table: "OrderItemProduct",
+                name: "IX_OrderItemProducts_ProductsProductId",
+                table: "OrderItemProducts",
                 column: "ProductsProductId");
 
             migrationBuilder.CreateIndex(
@@ -188,7 +188,7 @@ namespace OnlineShoppingCart.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "OrderItemProduct");
+                name: "OrderItemProducts");
 
             migrationBuilder.DropTable(
                 name: "Payment");

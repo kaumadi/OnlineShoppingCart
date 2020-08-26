@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { Customer } from '../shared/models/customer';
 import { CustomerService } from '../shared/services/customer.service';
@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit {
   currentUserSubscription: Subscription;
   show=true 
   id:number
+
  
 
   constructor(private router: Router,
@@ -25,7 +26,9 @@ export class HeaderComponent implements OnInit {
       this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
         this.currentUser = user;
         if(user !==null)
-        { this.show=true}
+        { this.show=true
+       //this.currentUser.customerId=this.customer_Id
+      }
         else{
           this.show=false
         }
@@ -33,7 +36,7 @@ export class HeaderComponent implements OnInit {
     }
 
   ngOnInit(){
-  
+
   }
 
   logout() {
