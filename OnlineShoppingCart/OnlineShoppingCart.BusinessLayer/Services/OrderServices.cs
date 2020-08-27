@@ -1,12 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MailKit.Net.Smtp;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using MimeKit;
 using OnlineShoppingCart.BusinessLayer.IRepositories;
 using OnlineShoppingCart.DataAccessLayer.Contexts;
 using OnlineShoppingCart.DataAccessLayer.Models;
 using OnlineShoppingCart.DataAccessLayer.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,13 +18,15 @@ namespace OnlineShoppingCart.BusinessLayer.Services
     {
         #region private propeties
         readonly OnlineShoppingCartContext _shoppingcartContext;
+        private readonly EmailConfiguration _emailConfig;
         #endregion
 
         #region Constructor
-        public OrderServices(OnlineShoppingCartContext context)
+        public OrderServices(OnlineShoppingCartContext context, EmailConfiguration emailConfig)
 
         {
             _shoppingcartContext = context ?? throw new ArgumentNullException(nameof(context));
+            _emailConfig = emailConfig;
         }
         #endregion
 
@@ -107,6 +111,10 @@ namespace OnlineShoppingCart.BusinessLayer.Services
                 _shoppingcartContext.Entry(product).CurrentValues.SetValues(orderItemToUpdate);
                 _shoppingcartContext.SaveChanges();
             }
+            
+            var body = PopulateBody("Kaumadi Marasinghe", orderID, purchaseViewModel.OrderDate, purchaseViewModel.TotalAmount);
+            var message = new EmailMessage(new string[] { "kaumadimarasinghe@gmail.com" }, "Your Order Details", body);
+            SendEmail(message);
 
             return orderID;
 
@@ -165,6 +173,114 @@ namespace OnlineShoppingCart.BusinessLayer.Services
                 TotalAmount=c.TotalAmount
                 }).ToListAsync();
         }
+        #endregion
+
+        #region Send Email
+        //public async Task SendEmailAsync(EmailMessage message)
+        //{
+        //    var mailMessage = CreateEmailMessage(message);
+
+        //    await SendAsync(mailMessage);
+        //}
+        //private MimeMessage CreateEmailMessage(EmailMessage message)
+        //{
+        //    var emailMessage = new MimeMessage();
+        //    emailMessage.From.Add(new MailboxAddress(_emailConfig.From));
+        //    emailMessage.To.AddRange(message.To);
+        //    emailMessage.Subject = message.Subject;
+        //    emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = string.Format("<h2 style='color:red;'>{0}</h2>", message.Content) };
+
+        //    return emailMessage;
+        //}
+
+        //private async Task SendAsync(MimeMessage mailMessage)
+        //{
+        //    using (var client = new SmtpClient())
+        //    {
+        //        try
+        //        {
+        //            await client.ConnectAsync(_emailConfig.SmtpServer, _emailConfig.Port, true);
+        //            client.AuthenticationMechanisms.Remove("XOAUTH2");
+        //            await client.AuthenticateAsync(_emailConfig.UserName, _emailConfig.Password);
+
+        //            await client.SendAsync(mailMessage);
+        //        }
+        //        catch
+        //        {
+        //            //log an error message or throw an exception, or both.
+        //            throw;
+        //        }
+        //        finally
+        //        {
+        //            await client.DisconnectAsync(true);
+        //            client.Dispose();
+        //        }
+        //    }
+        //}
+
+        public void SendEmail(EmailMessage message)
+        {
+            var emailMessage = CreateEmailMessage(message);
+            Send(emailMessage);
+        }
+
+        private MimeMessage CreateEmailMessage(EmailMessage message)
+        {
+            var emailMessage = new MimeMessage();
+            emailMessage.From.Add(new MailboxAddress(_emailConfig.From));
+            emailMessage.To.AddRange(message.To);
+            emailMessage.Subject = message.Subject;
+            emailMessage.Body = new TextPart("html")
+            {
+                Text = message.Content
+            };
+           
+            return emailMessage;
+        }
+
+        private void Send(MimeMessage mailMessage)
+        {
+            using (var client = new SmtpClient())
+            {
+                try
+                {
+                    client.Connect(_emailConfig.SmtpServer, _emailConfig.Port, true);
+                    client.AuthenticationMechanisms.Remove("XOAUTH2");
+                    client.Authenticate(_emailConfig.UserName, _emailConfig.Password);
+                    client.Send(mailMessage);
+                }
+                catch
+                {
+                    //log an error message or throw an exception or both.
+                    throw;
+                }
+                finally
+                {
+                    client.Disconnect(true);
+                    client.Dispose();
+                }
+            }
+        }
+        private string PopulateBody(string customerName, int orderId, DateTime orderDate, decimal totalAmount)
+        {
+        
+
+            string body = string.Empty;
+            //using streamreader for reading my htmltemplate   
+            using (StreamReader reader = new StreamReader(Path.Combine("Templete", "EmailTemplate.html")))
+            {
+                body = reader.ReadToEnd();
+                reader.Close();
+            }
+         
+            body = body.Replace("{CustomerName}", customerName);
+            body = body.Replace("{OrderID}", orderId.ToString());
+            body = body.Replace("{OrderDate}", orderDate.ToString());
+            body = body.Replace("{TotalAmount}", totalAmount.ToString());
+            return body;
+        }
+
+
         #endregion
     }
 }

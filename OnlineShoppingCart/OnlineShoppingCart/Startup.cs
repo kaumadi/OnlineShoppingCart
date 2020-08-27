@@ -3,11 +3,13 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Server.HttpSys;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using OnlineShoppingCart.BusinessLayer.Helpers;
@@ -16,7 +18,9 @@ using OnlineShoppingCart.BusinessLayer.Repositories;
 using OnlineShoppingCart.BusinessLayer.Services;
 using OnlineShoppingCart.DataAccessLayer.Contexts;
 using OnlineShoppingCart.DataAccessLayer.Models;
+using OnlineShoppingCart.DataAccessLayer.ViewModels;
 using System;
+using System.IO;
 using System.Text;
 
 namespace OnlineShoppingCart
@@ -73,7 +77,9 @@ namespace OnlineShoppingCart
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
 
-
+            services.Configure<SmtpSettings>(Configuration.GetSection("SmtpSettings"));
+            var emailConfig = Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
 
             //services.AddSingleton(mapper);
             // services.AddScoped<IAccountRepository<RegistrationViewModel>, AccountService>();
@@ -103,6 +109,13 @@ namespace OnlineShoppingCart
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new
+                PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Templete")),
+                RequestPath = new PathString("/Templete")
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

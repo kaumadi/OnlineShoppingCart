@@ -145,3 +145,7 @@ E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineSh
 E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart\obj\Debug\netcoreapp3.1\OnlineShoppingCart.csproj.CopyComplete
 E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart\obj\Debug\netcoreapp3.1\OnlineShoppingCart.dll
 E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart\obj\Debug\netcoreapp3.1\OnlineShoppingCart.pdb
+E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart\bin\Debug\netcoreapp3.1\MailKit.dll
+E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart\bin\Debug\netcoreapp3.1\MimeKit.dll
+E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart\bin\Debug\netcoreapp3.1\NETCore.MailKit.dll
+E:\Kau's Stuff\Virtusa\Projects\Bench .Net Assesment\OnlineShoppingCart\OnlineShoppingCart\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll

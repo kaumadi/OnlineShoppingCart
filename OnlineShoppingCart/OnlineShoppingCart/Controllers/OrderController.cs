@@ -66,6 +66,8 @@ namespace OnlineShoppingCart.Controllers
                 return BadRequest(ModelState);
             }
             var result = _orderService?.AddPurchase(purchaseViewModel);
+
+
             return Ok(result);
         }
 
@@ -84,7 +86,7 @@ namespace OnlineShoppingCart.Controllers
         }
         #endregion
 
-        #region
+        #region Payment History
         [HttpGet("paymentHistory/{customer_id}")]
         public async Task<IActionResult> GetAllPaymentsAsync(int customer_id)
         {

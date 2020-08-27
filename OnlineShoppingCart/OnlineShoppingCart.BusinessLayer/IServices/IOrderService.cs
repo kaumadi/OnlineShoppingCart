@@ -11,5 +11,6 @@ namespace OnlineShoppingCart.BusinessLayer.IRepositories
         int AddPurchase (PurchaseViewModel purchaseViewModel);
         Task<OrderDetailsViewModel> GetOrderDetailsAsync(int orderId);
         Task<IEnumerable<PaymentHistoryViewModel>> GetAllPaymentsAsync(int customerId);
+        void SendEmail(EmailMessage message);
     }
 }
