@@ -90,7 +90,7 @@ Payment(event: any){
                   //check alert not working
                     //this.alertService.success('Payment successfully');
                     console.log(data);
-                    window.alert('Payment successful');
+                    alert('Payment successful');
                     this.clear();
                     this.router.navigate(['/orderDetails',data], { relativeTo: this.route });
                  

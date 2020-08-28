@@ -58,6 +58,7 @@ loginForm: FormGroup;
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {
+                   // alert(error);
                     this.alertService.error(error);
                     this.loading = false;
                 });
