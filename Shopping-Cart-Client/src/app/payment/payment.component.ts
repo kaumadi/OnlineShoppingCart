@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { Customer } from '../shared/models/customer';
 import { Subscription } from 'rxjs';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductviewService } from '../shared/services/productview.service';
 import { PaymentService } from '../shared/services/payment.service';
 import { PaymentViewModel } from '../shared/view-models/paymentViewModel';
@@ -27,6 +27,8 @@ export class PaymentComponent implements OnInit {
   paymentViewModel:PaymentViewModel
   public paymentMethod:string
   public cartTotal: number = 0;
+ 
+
 
 
   
@@ -53,24 +55,28 @@ export class PaymentComponent implements OnInit {
       address:this.currentUser.address,
       email:this.currentUser.email,
       contact:this.currentUser.contact,
-      paymentMethod:('')
+      paymentMethod:['', [Validators.required]]
 
 
   });
+
   console.log(this.currentDate);
   this.items = this.productviewService.getItems();
   console.log(this.items);
   this.paymentViewModel = new PaymentViewModel();
   this.getTotalAmount();
+
   }
+
 
   changePaymentMethod(paymentOptione) {
     this.paymentMethod=paymentOptione.target.value
     console.log(paymentOptione.target.value);
   }
 
-Payment(){
- // this.alertService.clear();
+Payment(event: any){
+  
+  event.target.disabled = true;
   this.paymentViewModel.totalAmount=this.cartTotal
    this.paymentViewModel.orderDate=this.currentDate
    this.paymentViewModel.customerId=this.currentUser.customerId
@@ -94,6 +100,7 @@ Payment(){
                     this.alertService.error(error);
                                                        
                 });
+            
 }
 
 clear(){

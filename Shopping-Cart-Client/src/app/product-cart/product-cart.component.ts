@@ -36,7 +36,8 @@ export class ProductCartComponent implements OnInit {
   productStockStatus: ProductStockStatus;
   show: boolean 
   paymentViewModel:PaymentViewModel
-
+  checkAvaialability:boolean=false
+   public status:string
 
 
   constructor(private productviewService: ProductviewService,
@@ -103,18 +104,32 @@ this.checkoutViewModel.selectedListViewModel=this.items
    .subscribe((data)=>{
      this.items=data
      this.productviewService.items=this.items
-
+     this.checkAvaialability=true
+     for(var item of this.items){
+      if( item.productCurrentStatus !==true)
+      {
+        item.productCurrentStatus="Out of Stock"
+      }
+        else{
+        item.productCurrentStatus="In Stock"
+        }
+      }
    //  this.items = item.filter((x) => x.Name.includes("ABC"))
 
  for(var item of this.items){
-if( item.productCurrentStatus !==true)
+if( item.productCurrentStatus =="Out of Stock")
 {
+  
    this.show=false
    console.log("false found");
+ //  item.productCurrentStatus="Out of Stock"
 break
+
 }
 else{
+ 
   this.show=true
+ // item.productCurrentStatus="In Stock"
 }}
     console.log(this.items);
     })   

@@ -50,8 +50,8 @@
 								</div>
 									</td>
 									<td>
-									<div>
-										<div>
+									<div >
+										<div *ngIf="checkAvaialability">
 									
 											<h6>{{ item.productCurrentStatus}}</h6>
 											
@@ -77,9 +77,10 @@
 					</div>
 				</div>
 				<div class="col-lg-4 card-right">
+					
+					<a routerLink=" " class="site-btn sb-dark">Continue shopping</a>
 					<a class="site-btn sb-yellow" (click)="emptyCart()"> Clear Cart</a>
 					<a  class="site-btn"(click)="Checkout()">Proceed to checkout</a>
-					<a routerLink=" " class="site-btn sb-dark">Continue shopping</a>
 					<div *ngIf="show"><a routerLink="/payment" class="site-btn sb-red">Payment</a></div>
 					
 				
