@@ -7,9 +7,9 @@ namespace OnlineShoppingCart.BusinessLayer.IRepositories
     public interface IUserService
     {
         //AuthenticateResponse Authenticate(AuthenticateRequest model);
-        Task<IEnumerable<Customer>> GetAll();
+      //  Task<IEnumerable<Customer>> GetAll();
         Customer Create(Customer customer, string password);
-        Customer GetById(int CustomerId);
+      //  Customer GetById(int CustomerId);
         Customer Authenticate(string username, string password);
     }
 }

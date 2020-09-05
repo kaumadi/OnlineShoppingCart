@@ -40,10 +40,10 @@ namespace OnlineShoppingCart.BusinessLayer.Services
             // authentication successful
             return customer;
         }
-        public async Task<IEnumerable<Customer>> GetAll()
-        {
-            return await _shoppingcartContext.Customers.ToListAsync(); 
-        }
+        //public async Task<IEnumerable<Customer>> GetAll()
+        //{
+        //    return await _shoppingcartContext.Customers.ToListAsync(); 
+        //}
 
 
         public Customer Create(Customer customer, string password)
@@ -66,10 +66,10 @@ namespace OnlineShoppingCart.BusinessLayer.Services
 
             return customer;
         }
-        public Customer GetById(int CustomerId)
-        {
-            return _shoppingcartContext.Customers.Find(CustomerId);
-        }
+        //public Customer GetById(int CustomerId)
+        //{
+        //    return _shoppingcartContext.Customers.Find(CustomerId);
+        //}
 
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {

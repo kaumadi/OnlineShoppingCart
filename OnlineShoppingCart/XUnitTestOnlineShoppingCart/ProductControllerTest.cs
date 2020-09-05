@@ -11,8 +11,15 @@ using Xunit;
 
 namespace XUnitTestOnlineShoppingCart
 {
-    public class ControllerTest
+    public class ProductControllerTest
     {
+
+        /// <summary>
+        /// unit test for GetAll() method in Product Controller
+        /// check product List length is equal to 3
+        /// In here check all product are comming as output or not
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task Get_All_Products_Count_Check_Using_Moq()
         {

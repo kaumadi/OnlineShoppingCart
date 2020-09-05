@@ -95,25 +95,25 @@ namespace OnlineShoppingCart.Controllers
         }
         #endregion
 
-        #region Get All Users
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var users = await  _userService.GetAll();
-            var model = _mapper.Map<IList<CustomerViewModel>>(users);
-            return Ok(users);
+        //#region Get All Users
+        //[HttpGet]
+        //public async Task<IActionResult> GetAll()
+        //{
+        //    var users = await  _userService.GetAll();
+        //    var model = _mapper.Map<IList<CustomerViewModel>>(users);
+        //    return Ok(users);
 
-        }
-        #endregion
+        //}
+        //#endregion
 
-        #region Get User By Id
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
-        {
-            var user = _userService.GetById(id);
-            var model = _mapper.Map<CustomerViewModel>(user);
-            return Ok(model);
-        }
-        #endregion
+        //#region Get User By Id
+        //[HttpGet("{id}")]
+        //public IActionResult GetById(int id)
+        //{
+        //    var user = _userService.GetById(id);
+        //    var model = _mapper.Map<CustomerViewModel>(user);
+        //    return Ok(model);
+        //}
+        //#endregion
     }
 }

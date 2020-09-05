@@ -30,6 +30,8 @@ export class CheckoutService {
    .pipe(
     map(res => res));
     } 
+
+    
     
     
  
