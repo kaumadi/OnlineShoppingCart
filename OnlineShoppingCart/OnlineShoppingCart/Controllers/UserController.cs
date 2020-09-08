@@ -84,8 +84,8 @@ namespace OnlineShoppingCart.Controllers
             try
             {
                 // create user
-                _userService.Create(customer, model.Password);
-                return Ok();
+               var result= _userService.Create(customer, model.Password);
+                return Ok(result);
             }
             catch (AppException ex)
             {

@@ -26,7 +26,6 @@ namespace XUnitTestOnlineShoppingCart
             // Arrange
             var serviceMock = new Mock<IProductRepository>();
 
-            IEnumerable<Product> plist = new List<Product> { };
             serviceMock.Setup(x => x.GetAllProductsAsync()).ReturnsAsync(() => new List<Product> {
 
              new Product{ProductId=1, ProductName="Cake", UnitPrice=1250,UnitsInStock=2,Description="Item 001",ImagePath="1.png"},

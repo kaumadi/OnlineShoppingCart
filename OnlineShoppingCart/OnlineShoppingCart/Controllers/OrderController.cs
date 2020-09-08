@@ -68,7 +68,6 @@ namespace OnlineShoppingCart.Controllers
             }
             var result = _orderService?.AddPurchase(purchaseViewModel);
 
-
             return Ok(result);
         }
 
@@ -82,8 +81,8 @@ namespace OnlineShoppingCart.Controllers
         [HttpGet("{orderId}")]
         public async Task<IActionResult> GetOrderDetailsAsync(int orderId)
         {
-             var r=await _orderService?.GetOrderDetailsAsync(orderId);
-            return Ok(r);
+            var result=await _orderService?.GetOrderDetailsAsync(orderId);
+            return Ok(result);
         }
         #endregion
 
